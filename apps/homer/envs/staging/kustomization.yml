@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: homer
 
 resources:
-- ../../base/homer
+- ../../base
