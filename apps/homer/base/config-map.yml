@@ -16,13 +16,6 @@ data:
 
     # Services
     services:
-      - name: "Kubernetes"
-        icon: "fas fa-dharmachakra"
-        items:
-          - name: "ArgoCD"
-            logo: "https://argo-cd.readthedocs.io/en/stable/assets/logo.png"
-            url: "http://127.0.0.1:8080"
-            subtitle: "GitOps continuous delivery tool"
       - name: "Applications"
         icon: "fas fa-cloud"
         items: []
