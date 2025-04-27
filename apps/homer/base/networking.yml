@@ -3,14 +3,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: homer
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: default
 spec:
   rules:
-  - host: homer.k8s.local
+  - host: homer.stinkyboi.com
     http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
+      - backend:
           service:
             name: homer
             port:
