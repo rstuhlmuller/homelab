@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- cluster-role.yml
+- cluster-role-binding.yml
+- service-account.yml
+- daemon-set.yml
+
+namespace: kube-system
+
+commonLabels:
+  app: traefik
