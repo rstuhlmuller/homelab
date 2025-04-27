@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homer-config
+  namespace: homer
+data:
+  config.yml: |
+    ---
+    title: "Dashboard"
+    subtitle: "Homer Dashboard"
+    
+    # Optional theme customization
+    theme: default
+    
+    # Optional navbar
+    links: []
+
+    # Services
+    services:
+      - name: "Applications"
+        icon: "fas fa-cloud"
+        items: []
