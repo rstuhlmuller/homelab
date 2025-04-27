@@ -4,6 +4,8 @@ kind: Deployment
 metadata:
   name: homer
   namespace: homer
+  labels:
+    app: homer
 spec:
   replicas: 2
   selector:
