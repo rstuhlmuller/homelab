@@ -3,7 +3,13 @@ apiVersion: apps/v1
 metadata:
   name: traefik-daemon-set
 spec:
+  selector:
+    matchLabels:
+      app: traefik
   template:
+    metadata:
+      labels:
+        app: traefik
     spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
@@ -13,13 +19,10 @@ spec:
         ports:
         - name: http
           containerPort: 80
-          hostPort: 80
         - name: https
           containerPort: 443
-          hostPort: 443
         - name: admin
           containerPort: 8080
-          hostPort: 8080
         securityContext:
           capabilities:
             drop:
