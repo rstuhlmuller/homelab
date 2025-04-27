@@ -5,3 +5,5 @@ resources:
   - namespace.yml
   - deployment.yml
   - config-map.yml
+  - service.yml
+  - networking.yml
