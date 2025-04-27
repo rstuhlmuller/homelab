@@ -5,4 +5,4 @@ resources:
   - deployment.yml
   - config-map.yml
   - service.yml
-  - networking.yml
+  # - networking.yml
