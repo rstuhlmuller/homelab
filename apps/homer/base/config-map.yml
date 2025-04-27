@@ -17,6 +17,17 @@ data:
 
     # Services
     services:
+      - name: "Kubernetes"
+        icon: "fas fa-dharmachakra"
+        items:
+          - name: "Kubernetes Dashboard"
+            logo: "https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png"
+            url: "http://dashboard.k8s.local"
+            subtitle: "Web UI for Kubernetes cluster"
+          - name: "ArgoCD"
+            logo: "https://argo-cd.readthedocs.io/en/stable/assets/logo.png"
+            url: "https://argocd.k8s.local"
+            subtitle: "GitOps continuous delivery tool"
       - name: "Applications"
         icon: "fas fa-cloud"
         items: []
