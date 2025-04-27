@@ -1,6 +1,7 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mywebapp
+  name: homer
 spec:
-  replicas: 3
+  replicas: 2
