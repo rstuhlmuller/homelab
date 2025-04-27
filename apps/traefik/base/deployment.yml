@@ -1,0 +1,44 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: traefik-daemon-set
+spec:
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      serviceAccountName: traefik-ingress-controller
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+      containers:
+      - name: traefik-ingress-lb
+        image: traefik:v2.2
+        ports:
+        - name: web
+          containerPort: 80
+        - name: websecure
+          containerPort: 443
+        - name: admin
+          containerPort: 8080
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        args:
+        - --api.insecure
+        - --api.dashboard
+        - --providers.kubernetesingress
+        - --entryPoints.web.address=:80
+        - --entryPoints.websecure.address=:443
+        - --entrypoints.web.http.redirections.entryPoint.to=websecure
+        - --entrypoints.web.http.redirections.entryPoint.scheme=https
+        - --certificatesresolvers.default.acme.email=<YOUR_EMAIL>
+        - --certificatesresolvers.default.acme.storage=acme.json
+        - --certificatesresolvers.default.acme.tlschallenge
