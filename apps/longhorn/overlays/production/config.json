@@ -6,6 +6,8 @@
   "srcPath": "apps/longhorn/overlays/production",
   "srcRepoURL": "https://github.com/rstuhlmuller/homelab.git",
   "srcTargetRevision": "",
-  "labels": null,
+  "labels": {
+    "pod-security.kubernetes.io/enforce": "privileged"
+  },
   "annotations": null
 }

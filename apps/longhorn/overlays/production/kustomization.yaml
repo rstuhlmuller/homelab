@@ -3,3 +3,8 @@ kind: Kustomization
 
 resources:
 - ../../base
+
+namespace: longhorn-system
+
+commonLabels:
+  pod-security.kubernetes.io/enforce: privileged
