@@ -1,7 +1,7 @@
 {
   "appName": "longhorn",
   "userGivenName": "longhorn",
-  "destNamespace": "longhorn",
+  "destNamespace": "longhorn-system",
   "destServer": "https://kubernetes.default.svc",
   "srcPath": "apps/longhorn/overlays/production",
   "srcRepoURL": "https://github.com/rstuhlmuller/homelab.git",
