@@ -3,18 +3,4 @@ kind: Kustomization
 
 resources:
 - ../../base
-
-# Add namespace patch for Pod Security Standards
-patches:
-- patch: |
-    apiVersion: v1
-    kind: Namespace
-    metadata:
-      name: longhorn-system
-      annotations:
-        pod-security.kubernetes.io/enforce: privileged
-        pod-security.kubernetes.io/audit: privileged
-        pod-security.kubernetes.io/warn: privileged
-  target:
-    kind: Namespace
-    name: longhorn-system
+- namespace.yml
