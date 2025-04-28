@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: longhorn-manager
+  namespace: longhorn-system
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: install-deps
+        image: ubuntu:22.04
+        command:
+        - /bin/sh
+        - -c
+        - |
+          apt-get update && \
+          apt-get install -y open-iscsi && \
+          cp -f /usr/sbin/iscsid /host/usr/sbin/ && \
+          cp -f /usr/sbin/iscsiadm /host/usr/sbin/ && \
+          chroot /host systemctl enable --now iscsid || true
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: host-root
+          mountPath: /host
+      volumes:
+      - name: host-root
+        hostPath:
+          path: /
