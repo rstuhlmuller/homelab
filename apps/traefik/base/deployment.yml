@@ -20,8 +20,7 @@ spec:
           image: traefik:v3.3
           args:
             - --api.insecure
-            - --providers.kubernetesingress
-            - --providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik-web
+            - --providers.kubernetescrd
           ports:
             - name: web
               containerPort: 80
