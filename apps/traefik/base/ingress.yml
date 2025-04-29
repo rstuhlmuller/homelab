@@ -1,6 +1,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
-annotation:
+annotations:
   kubernetes.io/ingress.class: traefik
 metadata:
   name: traefik-dashboard
