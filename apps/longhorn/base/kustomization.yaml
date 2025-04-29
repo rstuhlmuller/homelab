@@ -4,4 +4,4 @@ resources:
 - https://raw.githubusercontent.com/longhorn/longhorn/v1.8.1/deploy/longhorn.yaml?timeout=120&ref=v1.8.1
 
 patches:
-- namespace.yml
+- path: namespace.yml
