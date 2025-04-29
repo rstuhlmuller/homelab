@@ -4,3 +4,4 @@ resources:
 - rbac.yml
 - deployment.yml
 - service.yml
+- ingress.yml
