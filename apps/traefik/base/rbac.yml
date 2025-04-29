@@ -2,7 +2,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: traefik-role
-
 rules:
   - apiGroups:
       - ""
@@ -73,4 +72,3 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: traefik-account
-    namespace: default # This tutorial uses the "default" K8s namespace.
