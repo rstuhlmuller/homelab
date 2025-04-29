@@ -22,6 +22,7 @@ spec:
           args:
             - --api.insecure
             - --providers.kubernetesingress
+            - --providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik-web
           ports:
             - name: web
               containerPort: 80
