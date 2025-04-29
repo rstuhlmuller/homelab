@@ -21,6 +21,8 @@ spec:
           args:
             - --api.insecure
             - --providers.kubernetescrd
+            - --entryPoints.web.Address=:80
+            - --entryPoints.websecure.Address=:8080
           ports:
             - name: web
               containerPort: 80
