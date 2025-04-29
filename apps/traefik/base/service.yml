@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: traefik-dashboard-service
+  name: traefik-dashboard
 spec:
   ports:
-    - port: 8080
+    - name: dashboard
+      port: 8080
       targetPort: dashboard
   selector:
     app: traefik
@@ -12,11 +13,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: traefik-web-service
+  name: traefik-web
 spec:
   type: LoadBalancer
   ports:
-    - targetPort: web
+    - name: web
+      targetPort: web
       port: 80
   selector:
     app: traefik
