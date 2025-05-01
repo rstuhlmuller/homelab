@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
     - name: dashboard
-      port: 9000
+      port: 8080
       targetPort: dashboard
   selector:
     app: traefik
