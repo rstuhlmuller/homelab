@@ -2,7 +2,7 @@
   "appName": "pihole",
   "userGivenName": "pihole",
   "destServer": "https://kubernetes.default.svc",
-  "srcPath": "apps/metallb/overlays/production",
+  "srcPath": "apps/pihole/overlays/production",
   "srcRepoURL": "https://github.com/rstuhlmuller/homelab.git",
   "srcTargetRevision": "",
   "labels": null,
