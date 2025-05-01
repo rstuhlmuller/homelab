@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
     - name: dashboard
-      port: 8080
+      port: 9000
       targetPort: dashboard
   selector:
     app: traefik
@@ -20,8 +20,5 @@ spec:
     - name: web
       targetPort: web
       port: 80
-    - name: websecure
-      targetPort: websecure
-      port: 443
   selector:
     app: traefik
