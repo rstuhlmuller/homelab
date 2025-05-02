@@ -1,8 +1,8 @@
 {
-  "appName": "pihole",
-  "userGivenName": "pihole",
+  "appName": "powerdns",
+  "userGivenName": "powerdns",
   "destServer": "https://kubernetes.default.svc",
-  "srcPath": "apps/pihole/overlays/production",
+  "srcPath": "apps/powerdns/overlays/production",
   "srcRepoURL": "https://github.com/rstuhlmuller/homelab.git",
   "srcTargetRevision": "",
   "labels": null,
