@@ -1,0 +1,10 @@
+{
+  "appName": "powerdns",
+  "userGivenName": "powerdns",
+  "destServer": "https://kubernetes.default.svc",
+  "srcPath": "apps/powerdns/overlays/production",
+  "srcRepoURL": "https://github.com/rstuhlmuller/homelab.git",
+  "srcTargetRevision": "",
+  "labels": null,
+  "annotations": null
+}

@@ -1,0 +1,11 @@
+{
+  "appName": "traefik",
+  "userGivenName": "traefik",
+  "destNamespace": "traefik",
+  "destServer": "https://kubernetes.default.svc",
+  "srcPath": "apps/traefik/overlays/production",
+  "srcRepoURL": "https://github.com/rstuhlmuller/homelab.git",
+  "srcTargetRevision": "",
+  "labels": null,
+  "annotations": null
+}
