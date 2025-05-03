@@ -1,9 +1,9 @@
-resource "helm_release" "argocd" {
-  name             = var.name
-  chart            = var.chart
-  repository       = var.repository
-  version          = var.chart_version
-  timeout          = var.timeout
-  namespace        = var.namespace
-  create_namespace = var.create_namespace
+resource "helm_release" "release" {
+  name             = "argocd"
+  chart            = "argo-cd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  version          = "7.7.14"
+  timeout          = "1500"
+  namespace        = "argocd"
+  create_namespace = true
 }

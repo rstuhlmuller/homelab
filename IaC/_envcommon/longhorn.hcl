@@ -11,5 +11,5 @@ include "helm_provider" {
 }
 
 terraform {
-  source = "${dirname(find_in_parent_folders("root.hcl"))}/modules/argocd"
+  source = "${dirname(find_in_parent_folders("root.hcl"))}/modules/longhorn"
 }
