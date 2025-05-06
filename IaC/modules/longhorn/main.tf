@@ -1,6 +1,6 @@
-resource "kubernetes_namespace" "metallb_system" {
+resource "kubernetes_namespace" "longhorn_system" {
   metadata {
-    name = "metallb-system"
+    name = "longhorn-system"
 
     labels = {
       "pod-security.kubernetes.io/enforce" = "privileged"

@@ -10,7 +10,7 @@ locals {
   tags = merge(
     # var.tags,
     {
-      Module = "self/argocd"
+      Module = "self/metallb"
     }
   )
 }
