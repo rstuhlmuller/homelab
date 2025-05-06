@@ -274,7 +274,7 @@ speaker:
 
   image:
     repository: quay.io/metallb/speaker
-    tag:
+    tag: v0.14.9
     pullPolicy:
   ## @param speaker.updateStrategy.type Speaker daemonset strategy type
   ## ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
