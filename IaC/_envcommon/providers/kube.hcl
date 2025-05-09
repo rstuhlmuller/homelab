@@ -1,5 +1,5 @@
-generate "helm_provider" {
-  path      = "helm_provider.tf"
+generate "kube_provider" {
+  path      = "kube_provider.tf"
   if_exists = "overwrite"
   contents  = <<EOF
 provider "kubernetes" {

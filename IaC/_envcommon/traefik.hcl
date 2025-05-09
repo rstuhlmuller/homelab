@@ -7,10 +7,10 @@ include "root" {
 }
 
 include "helm_provider" {
-  path = "${dirname(find_in_parent_folders("root.hcl"))}/_envcommon/providers/kube.hcl"
+  path = "${dirname(find_in_parent_folders("root.hcl"))}/_envcommon/providers/helm.hcl"
 }
-include "argocd_provider" {
-  path = "${dirname(find_in_parent_folders("root.hcl"))}/_envcommon/providers/argocd.hcl"
+include "kube_provider" {
+  path = "${dirname(find_in_parent_folders("root.hcl"))}/_envcommon/providers/kube.hcl"
 }
 
 terraform {
