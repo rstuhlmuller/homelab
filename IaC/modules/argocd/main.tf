@@ -6,4 +6,9 @@ resource "helm_release" "release" {
   timeout          = "1500"
   namespace        = "argocd"
   create_namespace = true
+
+  set {
+    name  = "spec.type"
+    value = "LoadBalancer"
+  }
 }
