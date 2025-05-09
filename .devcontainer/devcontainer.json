@@ -10,7 +10,9 @@
 			"tflint": "latest",
 			"terragrunt": "latest"
 		},
-		"ghcr.io/devcontainers/features/aws-cli": {}
+		"ghcr.io/devcontainers/features/aws-cli": {},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube": {},
+		"ghcr.io/devcontainers-extra/features/argo-cd": {}
 	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
