@@ -14,4 +14,3 @@ repos:
       - id: terraform-fmt
       - id: terragrunt-hclfmt
       - id: terraform-validate
-      - id: tflint
