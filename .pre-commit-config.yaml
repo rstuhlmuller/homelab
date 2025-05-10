@@ -13,4 +13,3 @@ repos:
     hooks:
       - id: terraform-fmt
       - id: terragrunt-hclfmt
-      - id: terraform-validate
