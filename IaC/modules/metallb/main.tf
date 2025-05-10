@@ -10,6 +10,15 @@ resource "kubernetes_namespace" "metallb_system" {
   }
 }
 
+resource "helm_release" "metallb" {
+  name       = "metallb"
+  repository = "https://metallb.github.io/metallb"
+  chart      = "metallb"
+  namespace  = kubernetes_namespace.metallb_system.metadata[0].name
+
+  wait = true
+}
+
 resource "kubernetes_manifest" "ip_address_pool" {
   manifest = {
     apiVersion = "metallb.io/v1beta1"
@@ -24,6 +33,7 @@ resource "kubernetes_manifest" "ip_address_pool" {
       ]
     }
   }
+  depends_on = [helm_release.metallb]
 }
 
 resource "kubernetes_manifest" "l2_advertisement" {
