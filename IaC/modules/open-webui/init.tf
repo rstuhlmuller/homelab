@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 2.36"
     }
+    argocd = {
+      source  = "argoproj-labs/argocd"
+      version = "~> 7.7"
+    }
   }
 }
 locals {
