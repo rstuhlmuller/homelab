@@ -1,0 +1,1 @@
+../../../_envcommon/locks/open-webui.terraform.lock.hcl
