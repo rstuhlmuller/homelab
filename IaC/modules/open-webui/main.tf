@@ -29,17 +29,10 @@ resource "argocd_application" "open_webui" {
           pipelines = {
             enabled = false
           }
-          enableOpenaiApi  = true
-          openaiBaseApiUrl = "https://openrouter.ai/api/v1"
           extraEnvVars = [
             {
-              name = "OPENAI_API_KEY"
-              valueFrom = {
-                secretKeyRef = {
-                  name = "${kubernetes_secret.open_webui_secret.metadata[0].name}"
-                  key  = "open-router-api-key"
-                }
-              }
+              name  = "BYPASS_MODEL_ACCESS_CONTROL"
+              value = "true"
             }
           ]
         })
