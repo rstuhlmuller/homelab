@@ -97,9 +97,9 @@ storage:
 
 # Additional volumes on the output Deployment definition.
 volumes:
-  - hostPath:
-      path: /k3s/local-path/technitium-dns/config
-    name: dns-config-hostpath
+  - name: dns-config-volume
+    persistentVolumeClaim:
+      claimName: technitium-config-pvc
 
 
 tolerations: []
