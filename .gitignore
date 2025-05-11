@@ -1,3 +1,2 @@
 .terragrunt-cache/
 .DS_Store
-proxmox-config/
