@@ -86,13 +86,20 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-storage: []
+storage:
+  - pvc:
+      name: technitium-config-pvc
+      size: 1Gi
+      storageClassName: longhorn
+    pv:
+      applicationServed: technitium
+      storageType: config
+
 # Additional volumes on the output Deployment definition.
 volumes:
   - hostPath:
       path: /k3s/local-path/technitium-dns/config
-    name: longhorn
-    size: 1Gi
+    name: dns-config-hostpath
 
 
 tolerations: []
