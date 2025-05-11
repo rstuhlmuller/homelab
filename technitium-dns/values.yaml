@@ -94,10 +94,9 @@ storage:
 
 # Additional volumes on the output Deployment definition.
 volumes:
-  - name: dns-config-volume
+  - name: dns-config-hostpath
     persistentVolumeClaim:
       claimName: technitium-config-pvc
-
 
 tolerations: []
 
