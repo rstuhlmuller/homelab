@@ -95,6 +95,8 @@ storage:
       name: technitium-config-pv
       applicationServed: technitium
       storageType: config
+      accessMode: ReadWriteOnce
+      capacity: 1Gi
 
 # Additional volumes on the output Deployment definition.
 volumes:
