@@ -91,12 +91,6 @@ storage:
       name: technitium-config-pvc
       size: 1Gi
       storageClassName: longhorn
-    pv:
-      name: technitium-config-pv
-      applicationServed: technitium
-      storageType: config
-      accessMode: ReadWriteOnce
-      capacity: 1Gi
 
 # Additional volumes on the output Deployment definition.
 volumes:
