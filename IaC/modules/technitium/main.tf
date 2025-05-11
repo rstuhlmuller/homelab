@@ -29,6 +29,9 @@ resource "argocd_application" "technitium" {
           controller = {
             namespace = kubernetes_namespace.technitium.metadata[0].name
           }
+          image = {
+            tag = "13.6.0"
+          }
         })
       }
     }
