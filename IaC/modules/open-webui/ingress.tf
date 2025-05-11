@@ -7,7 +7,7 @@ resource "kubernetes_ingress_v1" "traefik" {
   spec {
     ingress_class_name = "traefik"
     rule {
-      host = "open-webui.stinkyboi.com"
+      host = "chat.stinkyboi.com"
       http {
         path {
           path      = "/"
