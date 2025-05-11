@@ -1,0 +1,1 @@
+../../../_envcommon/locks/technitium.terraform.lock.hcl
