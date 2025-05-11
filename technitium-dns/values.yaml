@@ -92,6 +92,7 @@ storage:
       size: 1Gi
       storageClassName: longhorn
     pv:
+      name: technitium-config-pv
       applicationServed: technitium
       storageType: config
 
