@@ -26,4 +26,4 @@ spec:
           apiTokenSecretRef:
             # Secret containing Cloudflare API token
             name: cloudflare-api-key-secret
-            key: api_token
+            key: api_key
