@@ -18,9 +18,12 @@ spec:
       # certificates for any/all domains managed using your previous account,
       # but you will be unable to revoke any certificates generated using that
       # previous account.
-      name: letsencrypt-issuer-account-key
+      name: cloudflare-clusterissuer-account-key
     # Add a single challenge solver, HTTP01 using nginx
     solvers:
-    - http01:
-        ingress:
-          ingressClassName: traefik
+    - dns01:
+        cloudflare:
+          apiTokenSecretRef:
+            # Secret containing Cloudflare API token
+            name: cloudflare-api-token-secret
+            key: api_token
