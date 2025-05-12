@@ -3,6 +3,9 @@ resource "kubernetes_ingress_v1" "traefik" {
   metadata {
     name      = "open-webui-ingress"
     namespace = kubernetes_namespace.open_webui.metadata[0].name
+    annotations = {
+      "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
+    }
   }
   spec {
     ingress_class_name = "traefik"
@@ -22,6 +25,9 @@ resource "kubernetes_ingress_v1" "traefik" {
           }
         }
       }
+    }
+    tls {
+      secret_name = "open-webui-certificate-secret"
     }
   }
 }

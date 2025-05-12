@@ -1,0 +1,1 @@
+../../../_envcommon/locks/cert-manager.terraform.lock.hcl

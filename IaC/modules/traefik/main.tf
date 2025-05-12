@@ -14,12 +14,10 @@ resource "helm_release" "traefik" {
     name  = "service.type"
     value = "LoadBalancer"
   }
-
   set {
     name  = "ingressRoute.dashboard.enabled"
     value = "true"
   }
-
   set {
     name  = "ingressRoute.dashboard.entryPoints"
     value = "{web}"

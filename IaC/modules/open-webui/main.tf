@@ -29,12 +29,6 @@ resource "argocd_application" "open_webui" {
           pipelines = {
             enabled = false
           }
-          extraEnvVars = [
-            {
-              name  = "BYPASS_MODEL_ACCESS_CONTROL"
-              value = "true"
-            }
-          ]
         })
       }
     }
