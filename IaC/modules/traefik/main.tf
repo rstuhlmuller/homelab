@@ -9,7 +9,6 @@ resource "helm_release" "traefik" {
   repository = "https://helm.traefik.io/traefik"
   chart      = "traefik"
   namespace  = kubernetes_namespace.traefik.metadata[0].name
-
   set {
     name  = "service.type"
     value = "LoadBalancer"
