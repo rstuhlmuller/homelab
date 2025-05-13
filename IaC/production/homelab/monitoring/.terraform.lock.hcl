@@ -1,0 +1,1 @@
+../../../_envcommon/locks/monitoring.terraform.lock.hcl
