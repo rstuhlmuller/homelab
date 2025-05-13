@@ -27,12 +27,12 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: prometheus-ingressroute-certificate
+  name: monitoring-ingressroute-certificate
   namespace: monitoring
 spec:
-  secretName: prometheus-certificate-secret
+  secretName: monitoring-certificate-secret
   issuerRef:
     name: cloudflare-clusterissuer
     kind: ClusterIssuer
   dnsNames:
-    - 'prometheus.stinkyboi.com'
+    - 'monitoring.stinkyboi.com'

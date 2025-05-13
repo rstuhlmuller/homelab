@@ -27,22 +27,7 @@ resource "argocd_application" "prometheus" {
       target_revision = "27.13.0"
       helm {
         value_files = ["values.yaml"]
-        values = yamlencode({
-          server = {
-            ingress = {
-              enabled          = true
-              ingressClassName = "traefik"
-              tls = [
-                {
-                  secret_name = "prometheus-certificate-secret"
-                  hosts = [
-                    "prometheus.stinkyboi.com"
-                  ]
-                }
-              ]
-            }
-          }
-        })
+        values      = yamlencode({})
       }
     }
     sync_policy {
