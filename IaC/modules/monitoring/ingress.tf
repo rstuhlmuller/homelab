@@ -13,7 +13,7 @@ resource "kubernetes_ingress_v1" "traefik" {
       host = "monitoring.stinkyboi.com"
       http {
         path {
-          path      = "/prometheus/"
+          path      = "/"
           path_type = "Prefix"
           backend {
             service {
