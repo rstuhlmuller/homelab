@@ -10,14 +10,31 @@ resource "kubernetes_ingress_v1" "traefik" {
   spec {
     ingress_class_name = "traefik"
     rule {
-      host = "monitoring.stinkyboi.com"
+      host = "prometheus.stinkyboi.com"
       http {
         path {
           path      = "/"
           path_type = "Prefix"
           backend {
             service {
-              name = "monitoring-prometheus-server"
+              name = "prometheus-server"
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+      }
+    }
+    rule {
+      host = "grafana.stinkyboi.com"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "grafana"
               port {
                 number = 80
               }

@@ -11,7 +11,7 @@ resource "kubernetes_namespace" "monitoring" {
 
 resource "argocd_application" "prometheus" {
   metadata {
-    name = "monitoring"
+    name = "prometheus"
   }
 
   spec {
@@ -28,6 +28,35 @@ resource "argocd_application" "prometheus" {
       helm {
         value_files = ["values.yaml"]
         values      = yamlencode({})
+      }
+    }
+    sync_policy {
+      automated {
+        prune     = true
+        self_heal = true
+      }
+    }
+  }
+}
+
+resource "argocd_application" "grafana" {
+  metadata {
+    name = "grafana"
+  }
+
+  spec {
+    project = "default"
+    destination {
+      server    = "https://kubernetes.default.svc"
+      namespace = kubernetes_namespace.monitoring.metadata[0].name
+    }
+
+    source {
+      repo_url        = "https://grafana.github.io/helm-charts"
+      chart           = "grafana"
+      target_revision = "9.0.0"
+      helm {
+        value_files = ["values.yaml"]
       }
     }
     sync_policy {

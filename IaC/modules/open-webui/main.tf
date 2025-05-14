@@ -21,15 +21,18 @@ resource "argocd_application" "open_webui" {
       chart           = "open-webui"
       target_revision = "6.13.0"
       helm {
-        value_files = ["values.yaml"]
-        values = yamlencode({
-          ollama = {
-            enabled = false
-          }
-          pipelines = {
-            enabled = false
-          }
-        })
+        parameter {
+          name  = "ollama.enabled"
+          value = "false"
+        }
+        parameter {
+          name  = "pipelines.enabled"
+          value = "false"
+        }
+        parameter {
+          name  = "image.tag"
+          value = "0.6.9"
+        }
       }
     }
     sync_policy {

@@ -35,4 +35,5 @@ spec:
     name: cloudflare-clusterissuer
     kind: ClusterIssuer
   dnsNames:
-    - 'monitoring.stinkyboi.com'
+    - 'grafana.stinkyboi.com'
+    - 'prometheus.stinkyboi.com'
