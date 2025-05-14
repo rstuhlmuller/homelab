@@ -18,7 +18,11 @@ resource "helm_release" "traefik" {
     value = "true"
   }
   set {
-    name  = "ingressRoute.dashboard.entryPoints"
-    value = "{web}"
+    name  = "ingressRoute.dashboard.matchRule"
+    value = "Host(`prometheus.stinkyboi.com`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))"
+  }
+  set {
+    name  = "ingressRoute.dashboard.tls.secret_name"
+    value = "traefik-certificate-secret"
   }
 }
