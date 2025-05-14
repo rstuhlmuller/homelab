@@ -10,16 +10,16 @@ resource "helm_release" "traefik" {
   chart      = "traefik"
   namespace  = kubernetes_namespace.traefik.metadata[0].name
   set {
-    name  = "service.type"
-    value = "LoadBalancer"
-  }
-  set {
     name  = "ingressRoute.dashboard.enabled"
     value = "true"
   }
   set {
+    name  = "ingressRoute.dashboard.entryPoints"
+    value = "{websecure}"
+  }
+  set {
     name  = "ingressRoute.dashboard.matchRule"
-    value = "Host(`prometheus.stinkyboi.com`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))"
+    value = "Host(`traefik.stinkyboi.com`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))"
   }
   set {
     name  = "ingressRoute.dashboard.tls.secret_name"
