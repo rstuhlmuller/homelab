@@ -55,9 +55,7 @@ resource "argocd_application" "grafana" {
       repo_url        = "https://grafana.github.io/helm-charts"
       chart           = "grafana"
       target_revision = "9.0.0"
-      helm {
-        value_files = ["values.yaml"]
-      }
+
     }
     sync_policy {
       automated {

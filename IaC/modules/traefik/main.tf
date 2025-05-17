@@ -15,14 +15,14 @@ resource "helm_release" "traefik" {
   }
   set {
     name  = "ingressRoute.dashboard.entryPoints"
-    value = "{websecure}"
+    value = "{web}"
   }
-  set {
-    name  = "ingressRoute.dashboard.matchRule"
-    value = "Host(`traefik.stinkyboi.com`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))"
-  }
-  set {
-    name  = "ingressRoute.dashboard.tls.secret_name"
-    value = "traefik-certificate-secret"
-  }
+  # set {
+  #   name  = "ingressRoute.dashboard.matchRule"
+  #   value = "Host(`traefik.stinkyboi.com`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))"
+  # }
+  # set {
+  #   name  = "ingressRoute.dashboard.tls.secret_name"
+  #   value = "traefik-certificate-secret"
+  # }
 }

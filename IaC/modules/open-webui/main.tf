@@ -33,10 +33,6 @@ resource "argocd_application" "open_webui" {
           name  = "image.tag"
           value = "0.6.9"
         }
-        parameter {
-          name  = "replicaCount"
-          value = "2"
-        }
       }
     }
     sync_policy {
