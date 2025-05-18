@@ -4,6 +4,7 @@ metadata:
   name: ts-pod-cidrs
 spec:
   hostname: ts-pod-cidrs
+  isExitNode: true
   subnetRouter:
     advertiseRoutes:
       - "10.1.0.0/24"
