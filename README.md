@@ -2,9 +2,15 @@
 
 Welcome to the **Homelab Infrastructure as Code (IaC)** repository! This project is designed to manage and deploy a Kubernetes-based homelab environment using Terraform, Terragrunt, Helm, and Kubernetes. 🚀
 
+## Hardware 🖥️
+
+- **Control Plane Node:** Acer N4640G running Talos as the Kubernetes control plane
+- **Worker Nodes:** Two ZimaBoard 832 (with a third to be added soon)
+
 ## Table of Contents 📚
 
 - [Overview](#overview)
+- [Hardware](#hardware)
 - [Features](#features)
 - [Folder Structure](#folder-structure)
 - [Getting Started](#getting-started)
@@ -21,7 +27,7 @@ This repository provides a modular and reusable setup for managing a Kubernetes-
 
 - **Kubernetes Management**: Deploy and manage Kubernetes resources with ease.
 - **Helm Integration**: Use Helm charts for application deployment.
-- **Modular Design**: Reusable modules for common components like Longhorn, MetalLB, Traefik, and more.
+- **Modular Design**: Reusable modules for common components like Longhorn, MetalLB, Traefik, cert-manager, monitoring, Tailscale, Technitium, and more.
 - **Terragrunt**: Simplify Terraform configurations and manage remote state.
 - **AWS S3 Backend**: Store Terraform state securely in an S3 bucket.
 - **Pre-commit Hooks**: Ensure code quality with pre-commit checks for Terraform and YAML files.
@@ -36,26 +42,41 @@ IaC/
 │   ├── providers/            # Provider configurations (Helm, Kubernetes, etc.)
 │   ├── locks/                # Terraform lock files for modules
 │   ├── argocd.hcl            # ArgoCD module configuration
+│   ├── cert-manager.hcl      # cert-manager module configuration
 │   ├── longhorn.hcl          # Longhorn module configuration
 │   ├── metallb.hcl           # MetalLB module configuration
+│   ├── monitoring.hcl        # Monitoring module configuration
 │   ├── open-webui.hcl        # Open WebUI module configuration
+│   ├── tailscale.hcl         # Tailscale module configuration
+│   ├── technitium.hcl        # Technitium DNS module configuration
 │   └── traefik.hcl           # Traefik module configuration
 ├── modules/                  # Terraform modules for various components
 │   ├── argocd/               # ArgoCD module
+│   ├── cert-manager/         # cert-manager module
 │   ├── longhorn/             # Longhorn module
 │   ├── metallb/              # MetalLB module
+│   ├── monitoring/           # Monitoring module
 │   ├── open-webui/           # Open WebUI module
+│   ├── tailscale/            # Tailscale module
+│   ├── technitium/           # Technitium DNS module
 │   └── traefik/              # Traefik module
 └── production/               # Production environment configurations
     ├── account.hcl           # Account-specific variables
     ├── homelab/              # Homelab-specific configurations
         ├── region.hcl        # Region-specific variables
         ├── argocd/           # ArgoCD deployment
+        ├── cert-manager/     # cert-manager deployment
         ├── longhorn/         # Longhorn deployment
         ├── metallb/          # MetalLB deployment
+        ├── monitoring/       # Monitoring deployment
         ├── open-webui/       # Open WebUI deployment
+        ├── tailscale/        # Tailscale deployment
+        ├── technitium/       # Technitium DNS deployment
         └── traefik/          # Traefik deployment
 proxmox-config/               # Proxmox-specific configurations
+tailscale/                    # Tailscale connector YAML
+technitium-dns/               # Technitium DNS Helm chart
+cert-manager/                 # cert-manager manifests
 ```
 
 ## Getting Started 🚀
@@ -106,14 +127,26 @@ This project uses the following tools and technologies:
 ### ArgoCD 🎯
 - Deploy and manage GitOps workflows.
 
+### cert-manager 🔒
+- Automated management and issuance of TLS certificates for Kubernetes.
+
 ### Longhorn 🐂
 - Distributed block storage for Kubernetes.
 
 ### MetalLB 🌐
 - Load balancer for bare-metal Kubernetes clusters.
 
+### Monitoring 📈
+- Monitoring stack for observability (Prometheus, Grafana, etc.).
+
 ### Open WebUI 🌐
 - Web-based user interface for managing applications.
+
+### Tailscale 🦎
+- Zero-config VPN for secure networking between nodes and remote access.
+
+### Technitium DNS 🧩
+- Self-hosted DNS server for your homelab.
 
 ### Traefik 🚦
 - Reverse proxy and load balancer for Kubernetes.
