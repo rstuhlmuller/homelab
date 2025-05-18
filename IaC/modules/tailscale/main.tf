@@ -4,16 +4,6 @@ resource "kubernetes_namespace" "tailscale" {
   }
 }
 
-resource "aws_ssm_parameter" "oauth_secret" {
-  for_each = toset(["oauth_client_id", "oauth_client_secret"])
-  name     = "/homelab/tailscale/${each.key}"
-  type     = "SecureString"
-  value    = "update_me"
-  lifecycle {
-    ignore_changes = [value]
-  }
-}
-
 resource "argocd_application" "tailscale" {
   metadata {
     name = "tailscale"
@@ -39,6 +29,30 @@ resource "argocd_application" "tailscale" {
       repo_url        = "https://pkgs.tailscale.com/helmcharts"
       chart           = "tailscale-operator"
       target_revision = "1.82.5"
+    }
+    source {
+      repo_url = "https://github.com/rstuhlmuller/homelab.git"
+      path     = "tailscale"
+    }
+    sync_policy {
+      automated {
+        prune     = true
+        self_heal = true
+      }
+    }
+  }
+}
+
+resource "argocd_application" "vpn" {
+  metadata {
+    name = "homelab-vpn"
+  }
+
+  spec {
+    project = "default"
+    destination {
+      server    = "https://kubernetes.default.svc"
+      namespace = kubernetes_namespace.tailscale.metadata[0].name
     }
     source {
       repo_url = "https://github.com/rstuhlmuller/homelab.git"
