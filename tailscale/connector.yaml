@@ -1,10 +1,7 @@
 apiVersion: tailscale.com/v1alpha1
 kind: Connector
 metadata:
-  name: ts-pod-cidrs
+  name: exit-node
 spec:
-  hostname: ts-pod-cidrs
+  hostname: homelab-egress
   exitNode: true
-  subnetRouter:
-    advertiseRoutes:
-      - "10.1.0.0/24"
