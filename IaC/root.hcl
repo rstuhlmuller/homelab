@@ -37,8 +37,8 @@ remote_state {
 }
 
 inputs = {
-    project_name = "${local.project_name}"
-    account_name = "${local.account_name}"
-    region       = "${local.region}"
-    region_short = "${local.region_short}"
+  project_name = "${local.project_name}"
+  account_name = "${local.account_name}"
+  region       = "${local.region}"
+  region_short = "${local.region_short}"
 }
