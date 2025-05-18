@@ -27,7 +27,7 @@ resource "kubernetes_ingress_v1" "traefik" {
       }
     }
     tls {
-      secret_name = "open-webui-certificate-secret"
+      secret_name = "open-webui-certificate-secret" # pragma: allowlist secret
     }
   }
 }
