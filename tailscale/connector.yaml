@@ -5,3 +5,6 @@ metadata:
 spec:
   hostname: homelab-egress
   exitNode: true
+  subnetRouter:
+    advertiseRoutes:
+      - 10.1.0.0/24
