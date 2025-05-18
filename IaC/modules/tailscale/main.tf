@@ -25,7 +25,6 @@ resource "argocd_application" "tailscale" {
       server    = "https://kubernetes.default.svc"
       namespace = kubernetes_namespace.tailscale.metadata[0].name
     }
-
     source {
       helm {
         parameter {
@@ -40,6 +39,10 @@ resource "argocd_application" "tailscale" {
       repo_url        = "https://pkgs.tailscale.com/helmcharts"
       chart           = "tailscale-operator"
       target_revision = "1.82.5"
+    }
+    source {
+      repo_url = "https://github.com/rstuhlmuller/homelab.git"
+      path     = "tailscale"
     }
     sync_policy {
       automated {
