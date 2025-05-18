@@ -16,3 +16,10 @@ include "kube_provider" {
 terraform {
   source = "${dirname(find_in_parent_folders("root.hcl"))}/modules/traefik"
 }
+
+dependencies {
+  paths = [
+    "${dirname(find_in_parent_folders("region.hcl"))}/metallb",
+    "${dirname(find_in_parent_folders("region.hcl"))}/longhorn"
+  ]
+}
