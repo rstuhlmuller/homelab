@@ -42,27 +42,3 @@ resource "argocd_application" "tailscale" {
     }
   }
 }
-
-resource "argocd_application" "vpn" {
-  metadata {
-    name = "homelab-vpn"
-  }
-
-  spec {
-    project = "default"
-    destination {
-      server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.tailscale.metadata[0].name
-    }
-    source {
-      repo_url = "https://github.com/rstuhlmuller/homelab.git"
-      path     = "tailscale"
-    }
-    sync_policy {
-      automated {
-        prune     = true
-        self_heal = true
-      }
-    }
-  }
-}
