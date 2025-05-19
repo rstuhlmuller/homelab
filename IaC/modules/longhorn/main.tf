@@ -15,10 +15,5 @@ resource "helm_release" "longhorn" {
   repository = "https://charts.longhorn.io"
   chart      = "longhorn"
   namespace  = kubernetes_namespace.longhorn_system.metadata[0].name
-
-  # Add CRD management settings
-  dependency_update = true
-  force_update      = true
-  cleanup_on_fail   = true
-  atomic            = true
+  version    = "1.8.1"
 }
