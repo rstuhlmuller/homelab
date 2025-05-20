@@ -90,7 +90,7 @@ storage:
   - pvc:
       name: technitium-config-pvc
       size: 1Gi
-      storageClassName: longhorn
+      storageClassName: nfs-client
 
 # Additional volumes on the output Deployment definition.
 volumes:
