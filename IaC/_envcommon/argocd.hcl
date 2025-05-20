@@ -20,6 +20,6 @@ terraform {
 dependencies {
   paths = [
     "${dirname(find_in_parent_folders("region.hcl"))}/metallb",
-    "${dirname(find_in_parent_folders("region.hcl"))}/longhorn"
+    "${dirname(find_in_parent_folders("region.hcl"))}/storage"
   ]
 }

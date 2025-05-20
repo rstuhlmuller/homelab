@@ -1,0 +1,1 @@
+../../../_envcommon/storage.hcl

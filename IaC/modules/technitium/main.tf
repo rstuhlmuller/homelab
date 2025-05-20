@@ -24,15 +24,18 @@ resource "argocd_application" "technitium" {
       path     = "technitium-dns"
 
       helm {
-        value_files = ["values.yaml"]
-        values = yamlencode({
-          controller = {
-            namespace = kubernetes_namespace.technitium.metadata[0].name
-          }
-          image = {
-            tag = "13.6.0"
-          }
-        })
+        parameter {
+          name  = "replicaCount"
+          value = "2"
+        }
+        parameter {
+          name  = "controller.namespace"
+          value = kubernetes_namespace.technitium.metadata[0].name
+        }
+        parameter {
+          name  = "image.tag"
+          value = "13.6.0"
+        }
       }
     }
     sync_policy {
