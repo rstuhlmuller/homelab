@@ -25,10 +25,6 @@ resource "argocd_application" "technitium" {
 
       helm {
         parameter {
-          name  = "replicaCount"
-          value = "2"
-        }
-        parameter {
           name  = "controller.namespace"
           value = kubernetes_namespace.technitium.metadata[0].name
         }
