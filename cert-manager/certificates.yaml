@@ -17,7 +17,7 @@ metadata:
   name: argocd
   namespace: argocd
 spec:
-  secretName: argocd-applicationset-controller-tls # pragma: allowlist secret
+  secretName: argocd-server-tls # pragma: allowlist secret
   issuerRef:
     name: cloudflare-clusterissuer
     kind: ClusterIssuer
