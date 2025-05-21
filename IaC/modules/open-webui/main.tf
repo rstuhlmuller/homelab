@@ -33,6 +33,18 @@ resource "argocd_application" "open_webui" {
           name  = "image.tag"
           value = "0.6.10"
         }
+        parameter {
+          name  = "openaiBaseApiUrl"
+          value = "https://openrouter.ai/api/v1"
+        }
+        parameter {
+          name  = "extraEnvVars[0].name"
+          value = "OPENAI_API_KEY"
+        }
+        parameter {
+          name  = "extraEnvVars[0].value"
+          value = aws_ssm_parameter.openai_api_key.value
+        }
       }
     }
     sync_policy {
