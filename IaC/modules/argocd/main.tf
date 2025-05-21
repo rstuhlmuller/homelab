@@ -17,15 +17,13 @@ resource "helm_release" "release" {
 
   values = [yamlencode({
     server = {
-      service = {
-        type = "LoadBalancer"
-      }
       global = {
         domain = "argocd.stinkyboi.com"
       }
       ingress = {
         enabled          = true
         ingressClassName = "traefik"
+        hostname         = "argocd.stinkyboi.com"
         tls              = true
       }
     }
