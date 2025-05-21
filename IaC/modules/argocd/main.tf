@@ -15,16 +15,30 @@ resource "helm_release" "release" {
   timeout    = "1500"
   namespace  = kubernetes_namespace.argocd.metadata[0].name
 
+  set {
+    name  = "global.domain"
+    value = "argocd.stinkyboi.com"
+  }
+
   values = [yamlencode({
     server = {
-      global = {
-        domain = "argocd.stinkyboi.com"
+      certificate = {
+        enabled    = true
+        secretName = "argocd-server-tls" # pragma: allowlist secret
+        domain     = "argocd.stinkyboi.com"
+        issuer = {
+          group = "cert-manager.io"
+          kind  = "ClusterIssuer"
+          name  = "cloudflare-clusterissuer"
+        }
       }
       ingress = {
         enabled          = true
         ingressClassName = "traefik"
-        hostname         = "argocd.stinkyboi.com"
         tls              = true
+        annotations = {
+          "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
+        }
       }
     }
   })]
