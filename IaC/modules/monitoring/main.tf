@@ -61,6 +61,9 @@ resource "argocd_application" "grafana" {
           persistence = {
             enabled = true
           }
+          initChownData = {
+            enabled = false
+          }
         })
       }
     }
