@@ -14,10 +14,10 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: argocd-ingressroute-certificate
+  name: argocd
   namespace: argocd
 spec:
-  secretName: argocd-certificate-secret # pragma: allowlist secret
+  secretName: argocd-server-tls # pragma: allowlist secret
   issuerRef:
     name: cloudflare-clusterissuer
     kind: ClusterIssuer
@@ -50,16 +50,3 @@ spec:
     kind: ClusterIssuer
   dnsNames:
     - 'traefik.stinkyboi.com'
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: argocd
-  namespace: argocd
-spec:
-  secretName: argocd-server-tls # pragma: allowlist secret
-  issuerRef:
-    name: cloudflare-clusterissuer
-    kind: ClusterIssuer
-  dnsNames:
-    - 'argocd.stinkyboi.com'
