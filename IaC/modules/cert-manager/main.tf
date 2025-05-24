@@ -30,10 +30,6 @@ resource "argocd_application" "cert_manager" {
         })
       }
     }
-    source {
-      repo_url = "https://github.com/rstuhlmuller/homelab.git"
-      path     = "cert-manager"
-    }
     sync_policy {
       automated {
         prune     = true
