@@ -46,6 +46,26 @@ resource "argocd_application" "prometheus" {
           name  = "sabnzbd.enabled"
           value = "false"
         }
+        parameter {
+          name  = "radarr.ingress.tls.secretName"
+          value = "media-certificate-secret"
+        }
+        parameter {
+          name  = "sonarr.ingress.tls.secretName"
+          value = "media-certificate-secret"
+        }
+        parameter {
+          name  = "prowlarr.ingress.tls.secretName"
+          value = "media-certificate-secret"
+        }
+        parameter {
+          name  = "jackett.ingress.tls.secretName"
+          value = "media-certificate-secret"
+        }
+        parameter {
+          name  = "transmission.ingress.tls.secretName"
+          value = "media-certificate-secret"
+        }
       }
     }
     sync_policy {
