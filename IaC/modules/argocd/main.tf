@@ -21,11 +21,13 @@ resource "helm_release" "release" {
   }
 
   values = [yamlencode({
+    global = {
+      domain = "argocd.stinkyboi.com"
+    }
     server = {
       certificate = {
         enabled    = true
         secretName = "argocd-server-tls"
-        domain     = "argocd.stinkyboi.com"
         issuer = {
           group = "cert-manager.io"
           kind  = "ClusterIssuer"
@@ -39,6 +41,11 @@ resource "helm_release" "release" {
         annotations = {
           "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
         }
+      }
+    }
+    configs = {
+      params = {
+        "server.insecure" = "true"
       }
     }
   })]
