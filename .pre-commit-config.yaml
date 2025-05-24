@@ -17,8 +17,15 @@ repos:
     hooks:
       - id: terraform-fmt
       - id: terragrunt-hclfmt
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
     hooks:
-      - id: detect-secrets
-        name: Detect Secrets
+    - id: codespell
+  - repo: local
+    hooks:
+      - id: trufflehog
+        name: TruffleHog
+        description: Detect secrets in your data.
+        entry: bash -c 'trufflehog git file://. --since-commit HEAD --results=verified,unknown --fail'
+        language: system
+        stages: ["pre-commit", "pre-push"]
