@@ -82,3 +82,24 @@ resource "kubernetes_manifest" "argocd_certificate" {
     }
   }
 }
+
+resource "kubernetes_manifest" "media_certificate" {
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "Certificate"
+    metadata = {
+      name      = "media-certificate"
+      namespace = "media"
+    }
+    spec = {
+      secretName = "media-certificate-secret"
+      issuerRef = {
+        name = "cloudflare-clusterissuer"
+        kind = "ClusterIssuer"
+      }
+      dnsNames = [
+        "media.stinkyboi.com"
+      ]
+    }
+  }
+}
