@@ -1,0 +1,16 @@
+name: "Default Checks"
+
+permissions:
+  contents: read # for actions/checkout to fetch code
+  checks: write # for merge gatekeeper to create checks
+  statuses: write # for merge gatekeeper to create statuses
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    branches:
+      - main
+
+jobs:
+  check:
+    uses: rstuhlmuller/workflows/.github/workflows/default.yml@main
