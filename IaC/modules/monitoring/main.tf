@@ -75,3 +75,25 @@ resource "argocd_application" "grafana" {
     }
   }
 }
+
+resource "kubernetes_manifest" "monitoring_certificate" {
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "Certificate"
+    metadata = {
+      name      = "monitoring-ingressroute-certificate"
+      namespace = kubernetes_namespace.monitoring.metadata[0].name
+    }
+    spec = {
+      secretName = "monitoring-certificate-secret"
+      issuerRef = {
+        name = "cloudflare-clusterissuer"
+        kind = "ClusterIssuer"
+      }
+      dnsNames = [
+        "grafana.stinkyboi.com",
+        "prometheus.stinkyboi.com"
+      ]
+    }
+  }
+}

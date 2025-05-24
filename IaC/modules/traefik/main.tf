@@ -26,3 +26,24 @@ resource "helm_release" "traefik" {
     value = "traefik-certificate-secret"
   }
 }
+
+resource "kubernetes_manifest" "traefik_certificate" {
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "Certificate"
+    metadata = {
+      name      = "traefik"
+      namespace = kubernetes_namespace.traefik.metadata[0].name
+    }
+    spec = {
+      secretName = "traefik-certificate-secret"
+      issuerRef = {
+        name = "cloudflare-clusterissuer"
+        kind = "ClusterIssuer"
+      }
+      dnsNames = [
+        "traefik.stinkyboi.com"
+      ]
+    }
+  }
+}

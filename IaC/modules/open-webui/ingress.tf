@@ -31,3 +31,24 @@ resource "kubernetes_ingress_v1" "traefik" {
     }
   }
 }
+
+resource "kubernetes_manifest" "open_webui_certificate" {
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "Certificate"
+    metadata = {
+      name      = "open-webui-ingressroute-certificate"
+      namespace = "open-webui"
+    }
+    spec = {
+      secretName = "open-webui-certificate-secret"
+      issuerRef = {
+        name = "cloudflare-clusterissuer"
+        kind = "ClusterIssuer"
+      }
+      dnsNames = [
+        "chat.stinkyboi.com"
+      ]
+    }
+  }
+}
