@@ -1,2 +1,4 @@
-skip-path:
-  - '**/templates/'
+directory:
+  - .github
+  - IaC
+quiet: true
