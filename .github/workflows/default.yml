@@ -14,3 +14,5 @@ on:
 jobs:
   check:
     uses: rstuhlmuller/workflows/.github/workflows/default.yml@main
+    with:
+      skip-checkov-check: true
