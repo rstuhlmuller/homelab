@@ -24,7 +24,7 @@ resource "helm_release" "release" {
     server = {
       certificate = {
         enabled    = true
-        secretName = "argocd-server-tls" # pragma: allowlist secret
+        secretName = "argocd-server-tls"
         domain     = "argocd.stinkyboi.com"
         issuer = {
           group = "cert-manager.io"

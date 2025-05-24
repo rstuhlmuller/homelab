@@ -4,7 +4,7 @@ metadata:
   name: open-webui-ingressroute-certificate
   namespace: open-webui
 spec:
-  secretName: open-webui-certificate-secret # pragma: allowlist secret
+  secretName: open-webui-certificate-secret
   issuerRef:
     name: cloudflare-clusterissuer
     kind: ClusterIssuer
@@ -17,7 +17,7 @@ metadata:
   name: monitoring-ingressroute-certificate
   namespace: monitoring
 spec:
-  secretName: monitoring-certificate-secret # pragma: allowlist secret
+  secretName: monitoring-certificate-secret
   issuerRef:
     name: cloudflare-clusterissuer
     kind: ClusterIssuer
@@ -31,7 +31,7 @@ metadata:
   name: traefik
   namespace: traefik
 spec:
-  secretName: traefik-certificate-secret # pragma: allowlist secret
+  secretName: traefik-certificate-secret
   issuerRef:
     name: cloudflare-clusterissuer
     kind: ClusterIssuer

@@ -44,7 +44,7 @@ resource "kubernetes_ingress_v1" "traefik" {
       }
     }
     tls {
-      secret_name = "monitoring-certificate-secret" # pragma: allowlist secret
+      secret_name = "monitoring-certificate-secret"
     }
   }
 }
