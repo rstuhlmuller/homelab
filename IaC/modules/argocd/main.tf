@@ -50,3 +50,24 @@ resource "helm_release" "release" {
     }
   })]
 }
+
+resource "kubernetes_manifest" "argocd_certificate" {
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "Certificate"
+    metadata = {
+      name      = "argocd"
+      namespace = kubernetes_namespace.argocd.metadata[0].name
+    }
+    spec = {
+      secretName = "argocd-server-tls"
+      issuerRef = {
+        name = "cloudflare-clusterissuer"
+        kind = "ClusterIssuer"
+      }
+      dnsNames = [
+        "argocd.stinkyboi.com"
+      ]
+    }
+  }
+}

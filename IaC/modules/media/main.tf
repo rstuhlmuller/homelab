@@ -9,6 +9,28 @@ resource "kubernetes_namespace" "media" {
   }
 }
 
+
+resource "kubernetes_manifest" "media_certificate" {
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "Certificate"
+    metadata = {
+      name      = "media-certificate"
+      namespace = kubernetes_namespace.media.metadata[0].name
+    }
+    spec = {
+      secretName = "media-certificate-secret"
+      issuerRef = {
+        name = "cloudflare-clusterissuer"
+        kind = "ClusterIssuer"
+      }
+      dnsNames = [
+        "media.stinkyboi.com"
+      ]
+    }
+  }
+}
+
 resource "argocd_application" "prometheus" {
   metadata {
     name = "media"
