@@ -21,3 +21,27 @@ resource "helm_release" "nfs_subdir_external_provisioner" {
     value = "ReadWriteMany"
   }
 }
+
+resource "helm_release" "nfs_media" {
+  name       = "nfs-subdir-external-provisioner-media"
+  repository = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
+  chart      = "nfs-subdir-external-provisioner"
+  version    = "4.0"
+
+  set {
+    name  = "nfs.server"
+    value = "10.1.0.2"
+  }
+  set {
+    name  = "nfs.path"
+    value = "/Media"
+  }
+  set {
+    name  = "storageClass.accessModes"
+    value = "ReadWriteMany"
+  }
+  set {
+    name  = "storageClass.name"
+    value = "nfs-media"
+  }
+}

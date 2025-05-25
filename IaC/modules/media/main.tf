@@ -58,36 +58,58 @@ resource "argocd_application" "prometheus" {
         }
         parameter {
           name  = "general.storage.pvcStorageClass"
-          value = "nfs-client"
+          value = "nfs-media"
         }
         parameter {
           name  = "plex.enabled"
           value = "false"
         }
         parameter {
-          name  = "sabnzbd.enabled"
+          name  = "jackett.enabled"
           value = "false"
         }
         parameter {
-          name  = "radarr.ingress.tls.secretName"
-          value = "media-certificate-secret"
+          name  = "transmission.enabled"
+          value = "false"
         }
         parameter {
-          name  = "sonarr.ingress.tls.secretName"
-          value = "media-certificate-secret"
+          name  = "general.storage.size"
+          value = "500Gi"
         }
-        parameter {
-          name  = "prowlarr.ingress.tls.secretName"
-          value = "media-certificate-secret"
-        }
-        parameter {
-          name  = "jackett.ingress.tls.secretName"
-          value = "media-certificate-secret"
-        }
-        parameter {
-          name  = "transmission.ingress.tls.secretName"
-          value = "media-certificate-secret"
-        }
+        values = yamlencode({
+          sabnzbd = {
+            ingress = {
+              tls = {
+                enabled    = "true"
+                secretName = "media-certificate-secret"
+              }
+            }
+          }
+          prowlarr = {
+            ingress = {
+              tls = {
+                enabled    = "true"
+                secretName = "media-certificate-secret"
+              }
+            }
+          }
+          radarr = {
+            ingress = {
+              tls = {
+                enabled    = "true"
+                secretName = "media-certificate-secret"
+              }
+            }
+          }
+          sonarr = {
+            ingress = {
+              tls = {
+                enabled    = "true"
+                secretName = "media-certificate-secret"
+              }
+            }
+          }
+        })
       }
     }
     sync_policy {

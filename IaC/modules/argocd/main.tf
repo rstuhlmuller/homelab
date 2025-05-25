@@ -22,7 +22,8 @@ resource "helm_release" "release" {
 
   values = [yamlencode({
     global = {
-      domain = "argocd.stinkyboi.com"
+      domain                   = "argocd.stinkyboi.com"
+      addPrometheusAnnotations = "true"
     }
     server = {
       certificate = {

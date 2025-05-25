@@ -8,3 +8,27 @@ resource "aws_ssm_parameter" "oauth_secret" {
     ignore_changes = [value]
   }
 }
+
+resource "kubernetes_manifest" "tailscale_operator_oauth_secret" {
+  manifest = {
+    apiVersion = "external-secrets.io/v1"
+    kind       = "ExternalSecret"
+    metadata = {
+      name      = "operator-oauth"
+      namespace = kubernetes_namespace.tailscale.metadata[0].name
+    }
+    spec = {
+      secretStoreRef = {
+        name = "parameterstore"
+        kind = "ClusterSecretStore"
+      }
+      refreshPolicy = "OnChange"
+      data = [for k, v in aws_ssm_parameter.oauth_secret : {
+        secretKey = k
+        remoteRef = {
+          key = v.name
+        }
+      }]
+    }
+  }
+}

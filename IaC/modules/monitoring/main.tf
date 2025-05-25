@@ -26,8 +26,10 @@ resource "argocd_application" "prometheus" {
       chart           = "prometheus"
       target_revision = "27.13.0"
       helm {
-        value_files = ["values.yaml"]
-        values      = yamlencode({})
+        parameter {
+          name  = "alertmanager.enabled"
+          value = "false"
+        }
       }
     }
     sync_policy {
