@@ -65,29 +65,51 @@ resource "argocd_application" "prometheus" {
           value = "false"
         }
         parameter {
-          name  = "transmission.enabled"
-          value = "false"
-        }
-        parameter {
-          name  = "prowlarr.enabled"
-          value = "false"
-        }
-        parameter {
           name  = "jackett.enabled"
           value = "false"
         }
         parameter {
-          name  = "radarr.ingress.tls.secretName"
-          value = "media-certificate-secret"
-        }
-        parameter {
-          name  = "sonarr.ingress.tls.secretName"
-          value = "media-certificate-secret"
+          name  = "transmission.enabled"
+          value = "false"
         }
         parameter {
           name  = "general.storage.size"
           value = "500Gi"
         }
+        values = yamlencode({
+          sabnzbd = {
+            ingress = {
+              tls = {
+                enabled    = "true"
+                secretName = "media-certificate-secret"
+              }
+            }
+          }
+          prowlarr = {
+            ingress = {
+              tls = {
+                enabled    = "true"
+                secretName = "media-certificate-secret"
+              }
+            }
+          }
+          radarr = {
+            ingress = {
+              tls = {
+                enabled    = "true"
+                secretName = "media-certificate-secret"
+              }
+            }
+          }
+          sonarr = {
+            ingress = {
+              tls = {
+                enabled    = "true"
+                secretName = "media-certificate-secret"
+              }
+            }
+          }
+        })
       }
     }
     sync_policy {
