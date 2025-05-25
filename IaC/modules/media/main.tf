@@ -58,14 +58,14 @@ resource "argocd_application" "prometheus" {
         }
         parameter {
           name  = "general.storage.pvcStorageClass"
-          value = "nfs-client"
+          value = "nfs-media"
         }
         parameter {
           name  = "plex.enabled"
           value = "false"
         }
         parameter {
-          name  = "sabnzbd.enabled"
+          name  = "transmission.enabled"
           value = "false"
         }
         parameter {
@@ -85,8 +85,8 @@ resource "argocd_application" "prometheus" {
           value = "media-certificate-secret"
         }
         parameter {
-          name  = "transmission.ingress.tls.secretName"
-          value = "media-certificate-secret"
+          name  = "general.storage.size"
+          value = "500Gi"
         }
       }
     }
