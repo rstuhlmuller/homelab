@@ -1,0 +1,1 @@
+../../../_envcommon/external-secrets.hcl

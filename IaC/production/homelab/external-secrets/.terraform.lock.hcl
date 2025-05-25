@@ -1,0 +1,1 @@
+../../../_envcommon/locks/external-secrets.terraform.lock.hcl
