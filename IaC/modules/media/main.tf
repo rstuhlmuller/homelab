@@ -69,19 +69,19 @@ resource "argocd_application" "prometheus" {
           value = "false"
         }
         parameter {
+          name  = "prowlarr.enabled"
+          value = "false"
+        }
+        parameter {
+          name  = "jackett.enabled"
+          value = "false"
+        }
+        parameter {
           name  = "radarr.ingress.tls.secretName"
           value = "media-certificate-secret"
         }
         parameter {
           name  = "sonarr.ingress.tls.secretName"
-          value = "media-certificate-secret"
-        }
-        parameter {
-          name  = "prowlarr.ingress.tls.secretName"
-          value = "media-certificate-secret"
-        }
-        parameter {
-          name  = "jackett.ingress.tls.secretName"
           value = "media-certificate-secret"
         }
         parameter {
