@@ -27,7 +27,7 @@ resource "kubernetes_ingress_v1" "traefik" {
       }
     }
     tls {
-      secret_name = kubernetes_manifest.technitium_certificate.manifest["spec"]["secretName"]
+      secret_name = kubernetes_manifest.technitium_certificate.manifest.spec.secretName
     }
   }
 }
@@ -38,7 +38,7 @@ resource "kubernetes_manifest" "technitium_certificate" {
     kind       = "Certificate"
     metadata = {
       name      = "technitium-ingressroute-certificate"
-      namespace = "technitium"
+      namespace = kubernetes_namespace.technitium.metadata[0].name
     }
     spec = {
       secretName = "technitium-certificate-secret"

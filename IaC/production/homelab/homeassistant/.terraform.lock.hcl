@@ -1,0 +1,1 @@
+../../../_envcommon/locks/homeassistant.terraform.lock.hcl
