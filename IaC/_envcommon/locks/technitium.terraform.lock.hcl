@@ -2,8 +2,8 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/argoproj-labs/argocd" {
-  version     = "7.7.0"
-  constraints = "~> 7.7"
+  version     = "7.8.0"
+  constraints = "7.8.0"
   hashes = [
     "h1:dUlvwvs6cBr2gfw0XtekiqXv2mTinlK+5bQu0QSIrQU=",
     "zh:114d49688d3c8b303d4512ef45dd7a0f864f475f3f0fca89000a02fd8055f4f4",
