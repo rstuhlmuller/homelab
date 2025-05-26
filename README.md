@@ -31,6 +31,9 @@ This repository provides a modular and reusable setup for managing a Kubernetes-
 - **Terragrunt**: Simplify Terraform configurations and manage remote state.
 - **AWS S3 Backend**: Store Terraform state securely in an S3 bucket.
 - **Pre-commit Hooks**: Ensure code quality with pre-commit checks for Terraform and YAML files.
+- **ArgoCD Integration**: Seamlessly manage GitOps workflows for continuous deployment.
+- **Certificate Management**: Automated issuance and renewal of TLS certificates with cert-manager.
+- **Monitoring Stack**: Comprehensive monitoring and alerting setup with Prometheus, Grafana, and Loki.
 
 ## Folder Structure 🗂️
 
@@ -77,6 +80,10 @@ proxmox-config/               # Proxmox-specific configurations
 tailscale/                    # Tailscale connector YAML
 technitium-dns/               # Technitium DNS Helm chart
 cert-manager/                 # cert-manager manifests
+home-assistant/               # Home Assistant module
+media-services/               # Media services module (Plex, Jellyfin, etc.)
+external-secrets/             # External Secrets Operator module
+descheduler/                  # Kubernetes Descheduler module
 ```
 
 ## Getting Started 🚀
@@ -150,6 +157,18 @@ This project uses the following tools and technologies:
 
 ### Traefik 🚦
 - Reverse proxy and load balancer for Kubernetes.
+
+### Home Assistant 🏠
+- Home automation platform to control smart home devices.
+
+### Media Services 🎥
+- Deploy and manage media services like Plex and Jellyfin.
+
+### External Secrets 🔑
+- Integrate external secret management systems with Kubernetes.
+
+### Descheduler 🔄
+- Kubernetes Descheduler for rescheduling pods based on custom policies.
 
 ## Contributing 🤝
 
