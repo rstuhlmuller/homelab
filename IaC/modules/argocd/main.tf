@@ -15,15 +15,13 @@ resource "helm_release" "release" {
   timeout    = "1500"
   namespace  = kubernetes_namespace.argocd.metadata[0].name
 
-  set {
-    name  = "global.domain"
-    value = "argocd.stinkyboi.com"
-  }
-
   values = [yamlencode({
     global = {
       domain                   = "argocd.stinkyboi.com"
       addPrometheusAnnotations = "true"
+    }
+    metrics = {
+      enabled = true
     }
     server = {
       certificate = {
