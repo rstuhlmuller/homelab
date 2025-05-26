@@ -25,6 +25,14 @@ resource "helm_release" "traefik" {
     name  = "ingressRoute.dashboard.tls.secretName"
     value = "traefik-certificate-secret"
   }
+  set {
+    name  = "ports.web.redirections.entryPoint.to"
+    value = "websecure"
+  }
+  set {
+    name  = "ports.web.redirections.entryPoint.scheme"
+    value = "https"
+  }
 }
 
 resource "kubernetes_manifest" "traefik_certificate" {
