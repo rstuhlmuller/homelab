@@ -35,10 +35,6 @@ resource "argocd_application" "tailscale" {
         }
       }
     }
-    source {
-      repo_url = "https://github.com/rstuhlmuller/homelab.git"
-      path     = "tailscale"
-    }
     sync_policy {
       automated {
         prune     = true
@@ -46,4 +42,25 @@ resource "argocd_application" "tailscale" {
       }
     }
   }
+  depends_on = [kubernetes_manifest.tailscale_operator_oauth_secret]
+}
+
+resource "kubernetes_manifest" "tailscale_connector" {
+  manifest = {
+    apiVersion = "tailscale.com/v1alpha1"
+    kind       = "Connector"
+    metadata = {
+      name = "exit-node"
+    }
+    spec = {
+      hostname = "homelab-vpn"
+      exitNode = true
+      subnetRouter = {
+        advertiseRoutes = [
+          "10.1.0.0/24"
+        ]
+      }
+    }
+  }
+  depends_on = [argocd_application.tailscale]
 }

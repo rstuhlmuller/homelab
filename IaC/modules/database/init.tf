@@ -14,7 +14,7 @@ locals {
   tags = merge(
     # var.tags,
     {
-      Module = "self/open-webui"
+      Module = "self/database"
     }
   )
 }

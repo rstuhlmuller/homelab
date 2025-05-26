@@ -3,7 +3,7 @@
 
 provider "registry.terraform.io/argoproj-labs/argocd" {
   version     = "7.8.0"
-  constraints = "~> 7.7"
+  constraints = "7.8.0"
   hashes = [
     "h1:sZsVoqrKFZGDM1PaK/dp3aDN46RGaDlr9qzvGx38/Yg=",
     "zh:4091a09c0ceeb0983fdb726013f63cb71a70d047fcf93807aa91962bf6ed44dc",
