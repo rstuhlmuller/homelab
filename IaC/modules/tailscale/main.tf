@@ -24,6 +24,16 @@ resource "argocd_application" "tailscale" {
       repo_url        = "https://pkgs.tailscale.com/helmcharts"
       chart           = "tailscale-operator"
       target_revision = "1.82.5"
+      helm {
+        parameter {
+          name  = "oauth.clientID"
+          value = aws_ssm_parameter.oauth_secret["oauth_client_id"].value
+        }
+        parameter {
+          name  = "oauth.clientSecret"
+          value = aws_ssm_parameter.oauth_secret["oauth_client_secret"].value
+        }
+      }
     }
     sync_policy {
       automated {
