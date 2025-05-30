@@ -1,1 +1,0 @@
-../../../_envcommon/locks/media.terraform.lock.hcl
