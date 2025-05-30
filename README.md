@@ -80,8 +80,7 @@ proxmox-config/               # Proxmox-specific configurations
 tailscale/                    # Tailscale connector YAML
 technitium-dns/               # Technitium DNS Helm chart
 cert-manager/                 # cert-manager manifests
-home-assistant/               # Home Assistant module
-media-services/               # Media services module (Plex, Jellyfin, etc.)
+homeassistant/                # Home Assistant module
 external-secrets/             # External Secrets Operator module
 descheduler/                  # Kubernetes Descheduler module
 ```
@@ -160,9 +159,6 @@ This project uses the following tools and technologies:
 
 ### Home Assistant 🏠
 - Home automation platform to control smart home devices.
-
-### Media Services 🎥
-- Deploy and manage media services like Plex and Jellyfin.
 
 ### External Secrets 🔑
 - Integrate external secret management systems with Kubernetes.
