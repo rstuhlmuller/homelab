@@ -19,6 +19,25 @@ resource "argocd_application" "postgresql" {
       repo_url        = "https://charts.bitnami.com/bitnami"
       chart           = "postgresql"
       target_revision = "12.0.0"
+      helm {
+        parameter {
+          name  = "global.defaultStorageClass"
+          value = "nfs-client"
+        }
+        parameter {
+          name  = "auth.existingSecret"
+          value = kubernetes_manifest.postgresql_secret.manifest.metadata.name
+        }
+        parameter {
+          name  = "image.debug"
+          value = "true"
+        }
+        values = yamlencode({
+          volumePermissions = {
+            enabled = true
+          }
+        })
+      }
     }
     sync_policy {
       automated {
