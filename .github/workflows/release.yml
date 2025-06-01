@@ -24,3 +24,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           dry_run: ${{ github.event_name == 'pull_request'}}
+          ci: ${{ github.event_name != 'pull_request'}}
