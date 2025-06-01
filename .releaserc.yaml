@@ -10,5 +10,3 @@ plugins:
       release: false
 - - "@semantic-release/release-notes-generator"
   - preset: angular
-- - "@semantic-release/changelog"
-- - "@semantic-release/git"
