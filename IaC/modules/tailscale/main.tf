@@ -31,11 +31,11 @@ resource "argocd_application" "tailscale" {
         }
         parameter {
           name  = "oauth.clientID"
-          value = aws_ssm_parameter.oauth_secret["oauth_client_id"].value
+          value = aws_ssm_parameter.oauth_secret["client_id"].value
         }
         parameter {
           name  = "oauth.clientSecret"
-          value = aws_ssm_parameter.oauth_secret["oauth_client_secret"].value
+          value = aws_ssm_parameter.oauth_secret["client_secret"].value
         }
       }
     }
