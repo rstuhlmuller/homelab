@@ -11,4 +11,3 @@ plugins:
 - - "@semantic-release/release-notes-generator"
   - preset: angular
 - - "@semantic-release/changelog"
-- - "@semantic-release/git"
