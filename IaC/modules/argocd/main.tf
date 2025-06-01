@@ -15,6 +15,11 @@ resource "helm_release" "release" {
   timeout    = "1500"
   namespace  = kubernetes_namespace.argocd.metadata[0].name
 
+  parameter {
+    name  = "image.pullPolicy"
+    value = "Always"
+  }
+
   values = [yamlencode({
     global = {
       domain                   = "argocd.stinkyboi.com"

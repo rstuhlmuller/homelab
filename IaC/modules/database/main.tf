@@ -33,8 +33,8 @@ resource "argocd_application" "postgresql" {
           value = kubernetes_manifest.postgresql_secret.manifest.metadata.name
         }
         parameter {
-          name  = "image.debug"
-          value = "true"
+          name  = "image.pullPolicy"
+          value = "Always"
         }
       }
     }

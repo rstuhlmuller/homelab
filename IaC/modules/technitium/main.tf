@@ -25,6 +25,10 @@ resource "argocd_application" "technitium" {
 
       helm {
         parameter {
+          name  = "image.pullPolicy"
+          value = "Always"
+        }
+        parameter {
           name  = "controller.namespace"
           value = kubernetes_namespace.technitium.metadata[0].name
         }

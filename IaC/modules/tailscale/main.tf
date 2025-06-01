@@ -26,6 +26,10 @@ resource "argocd_application" "tailscale" {
       target_revision = "1.82.5"
       helm {
         parameter {
+          name  = "image.pullPolicy"
+          value = "Always"
+        }
+        parameter {
           name  = "oauth.clientID"
           value = aws_ssm_parameter.oauth_secret["oauth_client_id"].value
         }
@@ -42,7 +46,6 @@ resource "argocd_application" "tailscale" {
       }
     }
   }
-  depends_on = [kubernetes_manifest.tailscale_operator_oauth_secret]
 }
 
 resource "kubernetes_manifest" "tailscale_connector" {

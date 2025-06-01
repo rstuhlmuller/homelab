@@ -10,6 +10,10 @@ resource "helm_release" "traefik" {
   chart      = "traefik"
   namespace  = kubernetes_namespace.traefik.metadata[0].name
   set {
+    name  = "image.pullPolicy"
+    value = "Always"
+  }
+  set {
     name  = "ingressRoute.dashboard.enabled"
     value = "true"
   }
