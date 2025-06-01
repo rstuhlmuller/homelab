@@ -15,15 +15,13 @@ resource "helm_release" "release" {
   timeout    = "1500"
   namespace  = kubernetes_namespace.argocd.metadata[0].name
 
-  parameter {
-    name  = "image.pullPolicy"
-    value = "Always"
-  }
-
   values = [yamlencode({
     global = {
       domain                   = "argocd.stinkyboi.com"
       addPrometheusAnnotations = "true"
+    }
+    image = {
+      pullPolicy = "Always"
     }
     metrics = {
       enabled = true
@@ -50,6 +48,19 @@ resource "helm_release" "release" {
     configs = {
       params = {
         "server.insecure" = "true"
+      }
+      secret = {
+        createSecret = true
+      }
+      rbac = {
+        create       = true
+        "policy.csv" = <<EOF
+p, app_user, *, *, *, allow
+EOF
+      }
+      cm = {
+        "accounts.app_user"         = "apiKey"
+        "accounts.app_user.enabled" = true
       }
     }
   })]
