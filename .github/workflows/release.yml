@@ -3,12 +3,10 @@ name: "Release"
 permissions: read
 
 on:
-  workflow_dispatch:
-    inputs:
-      dry_run:
-        description: "Run in dry run mode"
-        required: false
-        default: "true"
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    branches:
+      - main
   push:
     branches:
       - main
@@ -25,4 +23,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          dry_run: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true' }}
+          dry_run: ${{ github.event_name == 'pull_request'}}
