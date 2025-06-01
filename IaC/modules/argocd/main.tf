@@ -20,6 +20,9 @@ resource "helm_release" "release" {
       domain                   = "argocd.stinkyboi.com"
       addPrometheusAnnotations = "true"
     }
+    image = {
+      pullPolicy = "Always"
+    }
     metrics = {
       enabled = true
     }
@@ -45,6 +48,19 @@ resource "helm_release" "release" {
     configs = {
       params = {
         "server.insecure" = "true"
+      }
+      secret = {
+        createSecret = true
+      }
+      rbac = {
+        create       = true
+        "policy.csv" = <<EOF
+p, app_user, *, *, *, allow
+EOF
+      }
+      cm = {
+        "accounts.app_user"         = "apiKey"
+        "accounts.app_user.enabled" = true
       }
     }
   })]

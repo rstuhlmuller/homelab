@@ -26,6 +26,10 @@ resource "argocd_application" "homarr" {
           value = "latest"
         }
         parameter {
+          name  = "image.pullPolicy"
+          value = "Always"
+        }
+        parameter {
           name  = "mysql.internal"
           value = "true"
         }

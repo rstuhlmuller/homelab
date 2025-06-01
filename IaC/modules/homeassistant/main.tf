@@ -21,6 +21,10 @@ resource "argocd_application" "homeassistant" {
       chart           = "home-assistant"
       target_revision = "0.3.4"
       helm {
+        parameter {
+          name  = "image.pullPolicy"
+          value = "Always"
+        }
         values = yamlencode({
           ingress = {
             enabled   = true

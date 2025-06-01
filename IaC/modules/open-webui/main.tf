@@ -34,17 +34,24 @@ resource "argocd_application" "open_webui" {
           value = "latest"
         }
         parameter {
+          name  = "image.pullPolicy"
+          value = "Always"
+        }
+        parameter {
           name  = "openaiBaseApiUrl"
           value = "https://openrouter.ai/api/v1"
         }
-        parameter {
-          name  = "extraEnvVars[0].name"
-          value = "OPENAI_API_KEY"
-        }
-        parameter {
-          name  = "extraEnvVars[0].value"
-          value = aws_ssm_parameter.openai_api_key.value
-        }
+        values = yamlencode({
+          extraEnvVars = [{
+            name = "OPENAI_API_KEY"
+            valueFrom = {
+              secretKeyRef = {
+                name = kubernetes_manifest.open_webui_secret.manifest.metadata.name
+                key  = "openai_api_key"
+              }
+            }
+          }]
+        })
       }
     }
     sync_policy {
