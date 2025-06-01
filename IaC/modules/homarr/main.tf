@@ -23,11 +23,19 @@ resource "argocd_application" "homarr" {
       helm {
         parameter {
           name  = "image.tag"
-          value = "v1.21.0"
+          value = "latest"
+        }
+        parameter {
+          name  = "mysql.internal"
+          value = "true"
         }
         parameter {
           name  = "rbac.enabled"
           value = "true"
+        }
+        parameter {
+          name  = "database.migrationEnabled"
+          value = "false"
         }
         values = yamlencode({
           ingress = {
@@ -54,10 +62,13 @@ resource "argocd_application" "homarr" {
               storageClassName = "nfs-client"
             }
           }
-          mysql = {
-            internal = true
-          }
         })
+      }
+    }
+    sync_policy {
+      automated {
+        prune     = true
+        self_heal = true
       }
     }
   }

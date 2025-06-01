@@ -22,7 +22,11 @@ resource "argocd_application" "postgresql" {
       helm {
         parameter {
           name  = "global.defaultStorageClass"
-          value = "nfs-client"
+          value = "nfs-database"
+        }
+        parameter {
+          name  = "global.storageClass"
+          value = "nfs-database"
         }
         parameter {
           name  = "auth.existingSecret"
@@ -32,11 +36,6 @@ resource "argocd_application" "postgresql" {
           name  = "image.debug"
           value = "true"
         }
-        values = yamlencode({
-          volumePermissions = {
-            enabled = true
-          }
-        })
       }
     }
     sync_policy {

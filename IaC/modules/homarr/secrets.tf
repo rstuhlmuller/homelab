@@ -24,7 +24,7 @@ resource "kubernetes_manifest" "db_secret" {
         kind = "ClusterSecretStore"
       }
       refreshPolicy   = "Periodic"
-      refreshInterval = "1h"
+      refreshInterval = "30s"
       data = [for key, value in aws_ssm_parameter.db_secret : {
         secretKey = key
         remoteRef = {
