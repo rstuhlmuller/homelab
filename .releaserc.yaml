@@ -1,5 +1,6 @@
 branches:
     - main
+    - refs/pull/*/merge
 plugins:
 - - "@semantic-release/commit-analyzer"
   - releaseRules:
