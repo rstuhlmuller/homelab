@@ -31,7 +31,7 @@ resource "argocd_application" "open_webui" {
         }
         parameter {
           name  = "image.tag"
-          value = "0.6.10"
+          value = "latest"
         }
         parameter {
           name  = "openaiBaseApiUrl"
