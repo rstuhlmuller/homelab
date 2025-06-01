@@ -44,7 +44,7 @@ resource "argocd_application" "open_webui" {
         values = yamlencode({
           extraEnvVars = [{
             name = "OPENAI_API_KEY"
-            valuFrom = {
+            valueFrom = {
               secretKeyRef = {
                 name = kubernetes_manifest.open_webui_secret.manifest.metadata.name
                 key  = "openai_api_key"
