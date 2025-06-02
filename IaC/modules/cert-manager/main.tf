@@ -22,6 +22,10 @@ resource "argocd_application" "cert_manager" {
       target_revision = "v1.17.2"
 
       helm {
+        parameter {
+          name  = "image.pullPolicy"
+          value = "Always"
+        }
         value_files = ["values.yaml"]
         values = yamlencode({
           crds = {
