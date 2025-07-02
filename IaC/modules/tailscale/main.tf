@@ -29,14 +29,6 @@ resource "argocd_application" "tailscale" {
           name  = "image.pullPolicy"
           value = "Always"
         }
-        parameter {
-          name  = "oauth.clientID"
-          value = aws_ssm_parameter.oauth_secret["client_id"].value
-        }
-        parameter {
-          name  = "oauth.clientSecret"
-          value = aws_ssm_parameter.oauth_secret["client_secret"].value
-        }
       }
     }
     sync_policy {

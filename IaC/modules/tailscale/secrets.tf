@@ -8,3 +8,28 @@ resource "aws_ssm_parameter" "oauth_secret" {
     ignore_changes = [value]
   }
 }
+
+resource "kubernetes_manifest" "oauth_secret" {
+  manifest = {
+    apiVersion = "external-secrets.io/v1"
+    kind       = "ExternalSecret"
+    metadata = {
+      name      = "operator-oauth"
+      namespace = kubernetes_namespace.tailscale.metadata[0].name
+    }
+    spec = {
+      secretStoreRef = {
+        name = "parameterstore"
+        kind = "ClusterSecretStore"
+      }
+      refreshPolicy   = "Periodic"
+      refreshInterval = "30s"
+      data = [for key, value in aws_ssm_parameter.oauth_secret : {
+        secretKey = key
+        remoteRef = {
+          key = value.name
+        }
+      }]
+    }
+  }
+}
