@@ -60,11 +60,24 @@ resource "argocd_application" "grafana" {
       helm {
         value_files = ["values.yaml"]
         values = yamlencode({
+          ingress = {
+            enabled = true
+            hosts = [
+              "grafana.stinkyboi.com"
+            ]
+            tls = [{
+              secretName = kubernetes_manifest.monitoring_certificate.manifest["spec"]["secretName"]
+              hosts      = ["grafana.stinkyboi.com"]
+            }]
+          }
           persistence = {
             enabled = true
           }
           initChownData = {
             enabled = false
+          }
+          env = {
+            GF_SERVER_ROOT_URL = "https://grafana.stinkyboi.com/"
           }
         })
       }
