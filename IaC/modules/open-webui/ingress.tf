@@ -3,19 +3,30 @@ resource "kubernetes_ingress_v1" "traefik" {
   metadata {
     name      = "open-webui-ingress"
     namespace = kubernetes_namespace.open_webui.metadata[0].name
+    annotations = {
+      "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
+    }
   }
   spec {
-    ingress_class_name = "tailscale"
-    default_backend {
-      service {
-        name = "open-webui"
-        port {
-          number = 80
+    ingress_class_name = "traefik"
+    rule {
+      host = "chat.stinkyboi.com"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "open-webui"
+              port {
+                number = 80
+              }
+            }
+          }
         }
       }
     }
     tls {
-      hosts       = ["chat"]
       secret_name = "open-webui-certificate-secret"
     }
   }
