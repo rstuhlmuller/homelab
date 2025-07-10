@@ -37,6 +37,10 @@ resource "helm_release" "traefik" {
     name  = "ports.web.redirections.entryPoint.scheme"
     value = "https"
   }
+  set {
+    name  = "service.loadBalancerClass"
+    value = "tailscale"
+  }
 }
 
 resource "kubernetes_manifest" "traefik_certificate" {
