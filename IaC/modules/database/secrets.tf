@@ -29,7 +29,7 @@ resource "kubernetes_manifest" "postgresql_secret" {
         name = "parameterstore"
         kind = "ClusterSecretStore"
       }
-      refreshInterval = "30s"
+      refreshInterval = "10m"
       data = [for k, v in aws_ssm_parameter.postgresql_secret : {
         secretKey = k
         remoteRef = {
