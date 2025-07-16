@@ -23,7 +23,7 @@ resource "kubernetes_manifest" "oauth_secret" {
         kind = "ClusterSecretStore"
       }
       refreshPolicy   = "Periodic"
-      refreshInterval = "30s"
+      refreshInterval = "10m"
       data = [for key, value in aws_ssm_parameter.oauth_secret : {
         secretKey = key
         remoteRef = {
