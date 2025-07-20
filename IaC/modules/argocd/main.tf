@@ -23,6 +23,21 @@ resource "helm_release" "release" {
     image = {
       pullPolicy = "Always"
     }
+    applicationSet = {
+      metrics = {
+        enabled = true
+      }
+    }
+    controller = {
+      metrics = {
+        enabled = true
+      }
+    }
+    repoServer = {
+      metrics = {
+        enabled = true
+      }
+    }
     server = {
       metrics = {
         enabled = true
