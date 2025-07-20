@@ -24,25 +24,22 @@ resource "argocd_application" "n8n" {
         values = yamlencode({
           main = {
             config = {
-              n8n_host     = "n8n.tail67beb.ts.net"
+              n8n_host     = "n8n.stinkyboi.com"
               n8n_protocol = "https"
             }
           }
           ingress = {
-            enabled   = true
-            className = "tailscale"
-            annotations = {
-              "tailscale.com/funnel" = "true"
-            }
+            enabled = true
             hosts = [
               {
-                host  = "n8n"
+                host  = "n8n.stinkyboi.com"
                 paths = ["/"]
               }
             ]
             tls = [
               {
-                hosts = ["n8n"]
+                secretName = kubernetes_manifest.n8n_tls.manifest.metadata.name
+                hosts      = ["n8n.stinkyboi.com"]
               }
             ]
           }
@@ -54,6 +51,27 @@ resource "argocd_application" "n8n" {
         prune     = true
         self_heal = true
       }
+    }
+  }
+}
+
+resource "kubernetes_manifest" "n8n_tls" {
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "Certificate"
+    metadata = {
+      name      = "n8n-tls"
+      namespace = kubernetes_namespace.n8n.metadata[0].name
+    }
+    spec = {
+      secretName = "n8n-tls"
+      issuerRef = {
+        name = "cloudflare-clusterissuer"
+        kind = "ClusterIssuer"
+      }
+      dnsNames = [
+        "n8n.stinkyboi.com"
+      ]
     }
   }
 }
