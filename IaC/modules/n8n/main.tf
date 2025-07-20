@@ -23,9 +23,15 @@ resource "argocd_application" "n8n" {
       helm {
         values = yamlencode({
           main = {
+            persistence = {
+              enabled = true
+              type    = "dynamic"
+              size    = "10Gi"
+            }
             config = {
-              n8n_host     = "n8n.stinkyboi.com"
-              n8n_protocol = "https"
+              n8n_editor_base_url = "https://n8n.stinkyboi.com"
+              n8n_host            = "n8n.stinkyboi.com"
+              n8n_protocol        = "https"
             }
           }
           ingress = {
