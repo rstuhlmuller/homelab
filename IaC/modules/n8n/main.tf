@@ -19,7 +19,7 @@ resource "argocd_application" "n8n" {
     source {
       repo_url        = "https://github.com/8gears/n8n-helm-chart"
       path            = "charts/n8n"
-      target_revision = "1.0.10" # test
+      target_revision = "1.0.10"
       helm {
         values = yamlencode({
           main = {
