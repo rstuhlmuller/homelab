@@ -28,6 +28,9 @@ resource "argocd_application" "cert_manager" {
         }
         value_files = ["values.yaml"]
         values = yamlencode({
+          prometheus = {
+            enabled = true
+          }
           crds = {
             enabled = true
           }

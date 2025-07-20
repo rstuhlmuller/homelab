@@ -23,10 +23,10 @@ resource "helm_release" "release" {
     image = {
       pullPolicy = "Always"
     }
-    metrics = {
-      enabled = true
-    }
     server = {
+      metrics = {
+        enabled = true
+      }
       certificate = {
         enabled    = true
         secretName = "argocd-server-tls"
