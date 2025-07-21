@@ -30,6 +30,7 @@ resource "argocd_application" "n8n" {
             }
             config = {
               n8n_editor_base_url = "https://n8n.stinkyboi.com"
+              n8n_external_url    = "https://n8n.tail67beb.ts.net"
               webhook_url         = "https://n8n.tail67beb.ts.net"
               n8n_host            = "n8n.stinkyboi.com"
               n8n_protocol        = "https"
