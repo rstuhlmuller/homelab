@@ -7,6 +7,10 @@ resource "kubernetes_namespace" "n8n" {
 resource "argocd_application" "n8n" {
   metadata {
     name = "n8n"
+    annotations = {
+      "argocd-image-updater.argoproj.io/image-list"          = "n8n=n8nio/n8n:1.x"
+      "argocd-image-updater.argoproj.io/n8n.update-strategy" = "semver"
+    }
   }
 
   spec {
@@ -27,7 +31,7 @@ resource "argocd_application" "n8n" {
               enabled = true
               type    = "dynamic"
               size    = "10Gi"
-            } // test
+            }
             config = {
               n8n_editor_base_url = "https://n8n.stinkyboi.com"
               n8n_external_url    = "https://n8n.tail67beb.ts.net"

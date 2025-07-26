@@ -81,6 +81,18 @@ EOF
   })]
 }
 
+resource "helm_release" "argocd_image_updater" {
+  name       = "argocd-image-updater"
+  chart      = "argocd-image-updater"
+  repository = "https://argoproj.github.io/argo-helm"
+  version    = "0.12.3"
+  namespace  = kubernetes_namespace.argocd.metadata[0].name
+  wait       = true
+
+  values = [yamlencode({
+  })]
+}
+
 resource "kubernetes_manifest" "argocd_certificate" {
   manifest = {
     apiVersion = "cert-manager.io/v1"

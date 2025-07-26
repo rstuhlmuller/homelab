@@ -7,6 +7,10 @@ resource "kubernetes_namespace" "open_webui" {
 resource "argocd_application" "open_webui" {
   metadata {
     name = "open-webui"
+    annotations = {
+      "argocd-image-updater.argoproj.io/image-list"                 = "open-webui=ghcr.io/open-webui/open-webui:0.x"
+      "argocd-image-updater.argoproj.io/open-webui.update-strategy" = "semver"
+    }
   }
 
   spec {
@@ -28,14 +32,6 @@ resource "argocd_application" "open_webui" {
         parameter {
           name  = "pipelines.enabled"
           value = "false"
-        }
-        parameter {
-          name  = "image.tag"
-          value = "latest"
-        }
-        parameter {
-          name  = "image.pullPolicy"
-          value = "Always"
         }
         parameter {
           name  = "openaiBaseApiUrl"
