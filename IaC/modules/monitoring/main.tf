@@ -192,6 +192,18 @@ resource "kubernetes_ingress_v1" "umami_tailscale_funnel" {
             }
           }
         }
+        path {
+          path      = "/api/send"
+          path_type = "Exact"
+          backend {
+            service {
+              name = "umami"
+              port {
+                number = 3000
+              }
+            }
+          }
+        }
       }
     }
     tls {
