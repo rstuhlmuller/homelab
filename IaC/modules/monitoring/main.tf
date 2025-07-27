@@ -181,7 +181,7 @@ resource "kubernetes_ingress_v1" "umami_tailscale_funnel" {
       host = "umami"
       http {
         path {
-          path      = "/umami"
+          path      = "/script.js"
           path_type = "Exact"
           backend {
             service {
