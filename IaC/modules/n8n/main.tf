@@ -102,7 +102,7 @@ resource "kubernetes_ingress_v1" "n8n_tailscale_funnel" {
       host = "n8n"
       http {
         path {
-          path      = "/"
+          path      = "/webhook"
           path_type = "Prefix"
           backend {
             service {
