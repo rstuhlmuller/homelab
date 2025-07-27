@@ -91,6 +91,59 @@ resource "argocd_application" "grafana" {
   }
 }
 
+resource "argocd_application" "umami" {
+  metadata {
+    name = "umami"
+  }
+
+  spec {
+    project = "default"
+    destination {
+      server    = "https://kubernetes.default.svc"
+      namespace = kubernetes_namespace.monitoring.metadata[0].name
+    }
+
+    source {
+      repo_url        = "https://charts.christianhuth.de"
+      chart           = "umami"
+      target_revision = "5.0.8"
+      helm {
+        values = yamlencode({
+          ingress = {
+            enabled = true
+            hosts = [
+              {
+                host = "umami.stinkyboi.com"
+                paths = [{
+                  path     = "/"
+                  pathType = "ImplementationSpecific"
+                }]
+              }
+            ]
+            tls = [{
+              secretName = kubernetes_manifest.monitoring_certificate.manifest["spec"]["secretName"]
+              hosts      = ["umami.stinkyboi.com"]
+            }]
+          }
+          postgresql = {
+            enabled = false
+          }
+          database = {
+            databaseUrlKey = "umami_database_url"
+            existingSecret = kubernetes_manifest.umami_secret.manifest.metadata.name
+          }
+        })
+      }
+    }
+    sync_policy {
+      automated {
+        prune     = true
+        self_heal = true
+      }
+    }
+  }
+}
+
 resource "kubernetes_manifest" "monitoring_certificate" {
   manifest = {
     apiVersion = "cert-manager.io/v1"
@@ -107,8 +160,42 @@ resource "kubernetes_manifest" "monitoring_certificate" {
       }
       dnsNames = [
         "grafana.stinkyboi.com",
-        "prometheus.stinkyboi.com"
+        "prometheus.stinkyboi.com",
+        "umami.stinkyboi.com"
       ]
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "umami_tailscale_funnel" {
+  metadata {
+    name      = "umami-tailscale-funnel"
+    namespace = kubernetes_namespace.monitoring.metadata[0].name
+    annotations = {
+      "tailscale.com/funnel" = "true"
+    }
+  }
+  spec {
+    ingress_class_name = "tailscale"
+    rule {
+      host = "umami"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "umami"
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+      }
+    }
+    tls {
+      hosts = ["umami"]
     }
   }
 }
