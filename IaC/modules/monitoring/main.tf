@@ -181,13 +181,13 @@ resource "kubernetes_ingress_v1" "umami_tailscale_funnel" {
       host = "umami"
       http {
         path {
-          path      = "/"
-          path_type = "Prefix"
+          path      = "/umami"
+          path_type = "Exact"
           backend {
             service {
               name = "umami"
               port {
-                number = 80
+                number = 3000
               }
             }
           }
