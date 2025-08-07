@@ -21,13 +21,17 @@ resource "argocd_application" "open_webui" {
     }
 
     source {
-      repo_url        = "https://helm.openwebui.com/"
-      chart           = "open-webui"
-      target_revision = "6.13.0"
+      repo_url        = "https://github.com/rstuhlmuller/openwebui-helm-charts.git"
+      path            = "charts/open-webui"
+      target_revision = "HEAD"
       helm {
         parameter {
           name  = "ollama.enabled"
           value = "false"
+        }
+        parameter {
+          name  = "mcpo.enabled"
+          value = "true"
         }
         parameter {
           name  = "pipelines.enabled"
@@ -36,6 +40,10 @@ resource "argocd_application" "open_webui" {
         parameter {
           name  = "openaiBaseApiUrl"
           value = "https://openrouter.ai/api/v1"
+        }
+        parameter {
+          name  = "config"
+          value = "{}"
         }
         values = yamlencode({
           extraEnvVars = [{
@@ -47,6 +55,14 @@ resource "argocd_application" "open_webui" {
               }
             }
           }]
+          config = {
+            mcpServers = {
+              time = {
+                command = "uvx"
+                args    = ["mcp-server-time", "--local-timezone=America/Los_Angeles"]
+              }
+            }
+          }
         })
       }
     }
