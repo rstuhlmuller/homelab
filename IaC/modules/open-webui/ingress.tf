@@ -47,8 +47,43 @@ resource "kubernetes_manifest" "open_webui_certificate" {
         kind = "ClusterIssuer"
       }
       dnsNames = [
-        "chat.stinkyboi.com"
+        "chat.stinkyboi.com",
+        "mcpo.chat.stinkyboi.com"
       ]
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "mcpo" {
+  wait_for_load_balancer = true
+  metadata {
+    name      = "open-webui-mcpo-ingress"
+    namespace = kubernetes_namespace.open_webui.metadata[0].name
+    annotations = {
+      "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
+    }
+  }
+  spec {
+    ingress_class_name = "traefik"
+    rule {
+      host = "mcpo.chat.stinkyboi.com"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "open-webui-mcpo"
+              port {
+                number = 8000
+              }
+            }
+          }
+        }
+      }
+    }
+    tls {
+      secret_name = "open-webui-certificate-secret"
     }
   }
 }
