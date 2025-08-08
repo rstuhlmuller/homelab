@@ -41,14 +41,6 @@ resource "argocd_application" "open_webui" {
           name  = "openaiBaseApiUrl"
           value = "https://litellm.stinkyboi.com/"
         }
-        parameter {
-          name  = "config"
-          value = "{}"
-        }
-        parameter {
-          name  = "config"
-          value = "{}"
-        }
         values = yamlencode({
           extraEnvVars = [{
             name = "OPENAI_API_KEY"
@@ -59,11 +51,17 @@ resource "argocd_application" "open_webui" {
               }
             }
           }]
-          config = {
-            mcpServers = {
-              time = {
-                command = "uvx"
-                args    = ["mcp-server-time", "--local-timezone=America/Los_Angeles"]
+          mcpo = {
+            config = {
+              mcpServers = {
+                time = {
+                  command = "uvx"
+                  args    = ["mcp-server-time", "--local-timezone=America/Los_Angeles"]
+                },
+                airbnb = {
+                  command = "npx",
+                  args    = ["-y", "@openbnb/mcp-server-airbnb", "--ignore-robots-txt"]
+                }
               }
             }
           }
