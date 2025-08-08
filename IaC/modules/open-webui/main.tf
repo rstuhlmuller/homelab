@@ -39,7 +39,11 @@ resource "argocd_application" "open_webui" {
         }
         parameter {
           name  = "openaiBaseApiUrl"
-          value = "https://openrouter.ai/api/v1"
+          value = "https://litellm.stinkyboi.com/"
+        }
+        parameter {
+          name  = "config"
+          value = "{}"
         }
         parameter {
           name  = "config"

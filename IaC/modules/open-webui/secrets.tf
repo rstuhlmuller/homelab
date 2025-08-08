@@ -23,8 +23,7 @@ resource "kubernetes_manifest" "open_webui_secret" {
         name = "parameterstore"
         kind = "ClusterSecretStore"
       }
-      refreshPolicy   = "Periodic"
-      refreshInterval = "10m"
+      refreshPolicy = "OnChange"
       data = [for key, value in aws_ssm_parameter.open_webui : {
         secretKey = key
         remoteRef = {
