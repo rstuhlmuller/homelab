@@ -67,7 +67,7 @@ resource "argocd_application" "litellm" {
                 model_name = "Nova Pro"
                 litellm_params = {
                   model           = "bedrock/amazon.nova-pro-v1:0"
-                  aws_region_name = "us-west-2"
+                  aws_region_name = "us-east-1"
                 }
               },
               {
