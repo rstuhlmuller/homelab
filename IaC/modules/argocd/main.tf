@@ -90,7 +90,7 @@ resource "helm_release" "argocd_image_updater" {
   wait       = true
 
   values = [yamlencode({
-    extraArgs = ["--interval", "6h"]
+    extraArgs = ["--interval", "1h"]
   })]
 }
 

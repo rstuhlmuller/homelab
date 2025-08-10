@@ -24,10 +24,7 @@
 		"vscode": {
 			"extensions": [
 				"hashicorp.hcl",
-				"hashicorp.terraform",
-				"GitHub.copilot",
-				"GitHub.copilot-chat",
-				"eamodio.gitlens"
+				"hashicorp.terraform"
 			]
 		}
 	},
