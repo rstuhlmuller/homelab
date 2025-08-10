@@ -8,7 +8,7 @@ resource "argocd_application" "open_webui" {
   metadata {
     name = "open-webui"
     annotations = {
-      "argocd-image-updater.argoproj.io/image-list"                 = "open-webui=ghcr.io/open-webui/open-webui:0.x"
+      "argocd-image-updater.argoproj.io/image-list"                 = "open-webui=ghcr.io/open-webui/open-webui:0.102.x"
       "argocd-image-updater.argoproj.io/open-webui.update-strategy" = "semver"
     }
   }
