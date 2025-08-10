@@ -62,6 +62,16 @@ resource "argocd_application" "open_webui" {
                   command = "npx",
                   args    = ["-y", "@openbnb/mcp-server-airbnb", "--ignore-robots-txt"]
                 }
+                "awslabs.aws-documentation-mcp-server" = {
+                  command = "uvx",
+                  args    = ["awslabs.aws-documentation-mcp-server@latest"],
+                  env = {
+                    "FASTMCP_LOG_LEVEL" : "ERROR",
+                    "AWS_DOCUMENTATION_PARTITION" : "aws"
+                  },
+                  disabled    = false,
+                  autoApprove = []
+                }
               }
             }
           }
