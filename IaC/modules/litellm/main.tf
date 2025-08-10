@@ -66,8 +66,8 @@ resource "argocd_application" "litellm" {
               {
                 model_name = "Nova Pro"
                 litellm_params = {
-                  model           = "bedrock/amazon.nova-pro-v1:0"
-                  aws_region_name = "us-east-1"
+                  model           = "bedrock/us.amazon.nova-pro-v1:0"
+                  aws_region_name = "us-west-2"
                 }
               },
               {
@@ -80,7 +80,7 @@ resource "argocd_application" "litellm" {
               {
                 model_name = "DeepSeek-R1"
                 litellm_params = {
-                  model           = "bedrock/converse/deepseek.r1-v1:0"
+                  model           = "bedrock/us.deepseek.r1-v1:0"
                   aws_region_name = "us-west-2"
                 }
               },
