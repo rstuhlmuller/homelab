@@ -88,10 +88,6 @@ resource "helm_release" "argocd_image_updater" {
   version    = "0.12.3"
   namespace  = kubernetes_namespace.argocd.metadata[0].name
   wait       = true
-
-  values = [yamlencode({
-    extraArgs = ["--interval", "1h"]
-  })]
 }
 
 resource "kubernetes_manifest" "argocd_certificate" {

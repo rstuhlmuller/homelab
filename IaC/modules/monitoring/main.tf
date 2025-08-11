@@ -94,6 +94,10 @@ resource "argocd_application" "grafana" {
 resource "argocd_application" "umami" {
   metadata {
     name = "umami"
+    annotations = {
+      "argocd-image-updater.argoproj.io/image-list"            = "umami=ghcr.io/umami-software/umami:postgresql-v2"
+      "argocd-image-updater.argoproj.io/umami.update-strategy" = "digest"
+    }
   }
 
   spec {
