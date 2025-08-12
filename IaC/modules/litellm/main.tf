@@ -8,8 +8,8 @@ resource "argocd_application" "litellm" {
   metadata {
     name = "litellm"
     annotations = {
-      "argocd-image-updater.argoproj.io/image-list"              = "litellm=ghcr.io/berriai/litellm:main-latest"
-      "argocd-image-updater.argoproj.io/litellm.update-strategy" = "latest"
+      "argocd-image-updater.argoproj.io/image-list"              = "litellm=ghcr.io/berriai/litellm-database:main-stable"
+      "argocd-image-updater.argoproj.io/litellm.update-strategy" = "digest"
     }
   }
 
@@ -28,11 +28,6 @@ resource "argocd_application" "litellm" {
         values = yamlencode({
           migrationJob = {
             enabled = false
-          }
-          image = {
-            repository = "ghcr.io/berriai/litellm-non_root"
-            pullPolicy = "Always"
-            tag        = "main-v1.65.3-nightly"
           }
           db = {
             deployStandalone = false
