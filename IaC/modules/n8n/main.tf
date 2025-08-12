@@ -8,8 +8,8 @@ resource "argocd_application" "n8n" {
   metadata {
     name = "n8n"
     annotations = {
-      "argocd-image-updater.argoproj.io/image-list"          = "n8n=n8nio/n8n:stable"
-      "argocd-image-updater.argoproj.io/n8n.update-strategy" = "digest"
+      "argocd-image-updater.argoproj.io/image-list"          = "n8n=n8nio/n8n:1.102.x"
+      "argocd-image-updater.argoproj.io/n8n.update-strategy" = "semver"
     }
   }
 
