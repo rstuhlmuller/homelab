@@ -27,7 +27,7 @@ resource "argocd_application" "n8n" {
       helm {
         values = yamlencode({
           image = {
-            tag = "stable"
+            tag = "1.102.4"
           }
           main = {
             persistence = {
