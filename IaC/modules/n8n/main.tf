@@ -9,7 +9,7 @@ resource "argocd_application" "n8n" {
     name = "n8n"
     annotations = {
       "argocd-image-updater.argoproj.io/image-list"          = "n8n=n8nio/n8n:stable"
-      "argocd-image-updater.argoproj.io/n8n.update-strategy" = "newest-build"
+      "argocd-image-updater.argoproj.io/n8n.update-strategy" = "digest"
     }
   }
 
@@ -106,6 +106,18 @@ resource "kubernetes_ingress_v1" "n8n_tailscale_funnel" {
       http {
         path {
           path      = "/webhook"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "n8n"
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+        path {
+          path      = "/webhook-test"
           path_type = "Prefix"
           backend {
             service {
