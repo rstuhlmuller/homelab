@@ -9,7 +9,7 @@ resource "argocd_application" "n8n" {
     name = "n8n"
     annotations = {
       "argocd-image-updater.argoproj.io/image-list"          = "n8n=n8nio/n8n:stable"
-      "argocd-image-updater.argoproj.io/n8n.update-strategy" = "latest"
+      "argocd-image-updater.argoproj.io/n8n.update-strategy" = "newest-build"
     }
   }
 
