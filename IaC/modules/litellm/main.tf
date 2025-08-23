@@ -26,6 +26,9 @@ resource "argocd_application" "litellm" {
       target_revision = "HEAD"
       helm {
         values = yamlencode({
+          image = {
+            tag = "main-stable"
+          }
           migrationJob = {
             enabled = false
           }
@@ -57,6 +60,10 @@ resource "argocd_application" "litellm" {
           }
           environmentSecrets = ["litellm-env"]
           proxy_config = {
+            general_settings = {
+              store_model_in_db           = true
+              store_prompts_in_spend_logs = true
+            }
             model_list = [
               {
                 model_name = "Nova Pro"
@@ -80,10 +87,24 @@ resource "argocd_application" "litellm" {
                 }
               },
               {
-                model_name = "gpt-oss-120b"
+                model_name = "gpt-5-2025-08-07"
                 litellm_params = {
-                  model           = "bedrock/openai.gpt-oss-120b-1:0"
-                  aws_region_name = "us-west-2"
+                  model   = "openai/gpt-5-2025-08-07"
+                  api_key = "os.environ/OPENAI_API_KEY"
+                }
+              },
+              {
+                model_name = "gpt-3.5-turbo"
+                litellm_params = {
+                  model   = "openai/gpt-3.5-turbo"
+                  api_key = "os.environ/OPENAI_API_KEY"
+                }
+              },
+              {
+                model_name = "gpt-image-1"
+                litellm_params = {
+                  model   = "openai/gpt-image-1"
+                  api_key = "os.environ/OPENAI_API_KEY"
                 }
               }
             ]

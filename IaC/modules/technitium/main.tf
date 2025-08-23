@@ -7,9 +7,30 @@ resource "kubernetes_namespace" "technitium" {
   }
 }
 
+resource "kubernetes_persistent_volume_claim" "technitium_config" {
+  metadata {
+    name      = "technitium-config-pvc"
+    namespace = kubernetes_namespace.technitium.metadata[0].name
+  }
+
+  spec {
+    access_modes = ["ReadWriteMany"]
+    resources {
+      requests = {
+        storage = "1Gi"
+      }
+    }
+    storage_class_name = "nfs-client"
+  }
+}
+
 resource "argocd_application" "technitium" {
   metadata {
     name = "technitium"
+    annotations = {
+      "argocd-image-updater.argoproj.io/image-list"                = "technitium=technitium/dns-server:13.x"
+      "argocd-image-updater.argoproj.io/tailscale.update-strategy" = "semver"
+    }
   }
 
   spec {
@@ -20,14 +41,10 @@ resource "argocd_application" "technitium" {
     }
 
     source {
-      repo_url = "https://github.com/rstuhlmuller/homelab.git"
-      path     = "technitium-dns"
+      repo_url = "https://github.com/aaronsteed/technitium-dns-kube-controller"
+      path     = "chart/technitium-dns"
 
       helm {
-        parameter {
-          name  = "image.pullPolicy"
-          value = "Always"
-        }
         parameter {
           name  = "controller.namespace"
           value = kubernetes_namespace.technitium.metadata[0].name
@@ -36,6 +53,17 @@ resource "argocd_application" "technitium" {
           name  = "image.tag"
           value = "13.6.0"
         }
+        values = yamlencode({
+          imagePullSecrets = []
+          volumes = [
+            {
+              name = "dns-config-hostpath"
+              persistentVolumeClaim = {
+                claimName = kubernetes_persistent_volume_claim.technitium_config.metadata[0].name
+              }
+            }
+          ]
+        })
       }
     }
     sync_policy {
