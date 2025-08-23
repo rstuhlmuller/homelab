@@ -12,6 +12,12 @@ resource "kubernetes_namespace" "tailscale" {
 resource "argocd_application" "tailscale" {
   metadata {
     name = "tailscale"
+    annotations = {
+      "argocd-image-updater.argoproj.io/image-list"                = "tailscale=tailscale/k8s-operator:v1.x"
+      "argocd-image-updater.argoproj.io/tailscale.update-strategy" = "semver"
+      "argocd-image-updater.argoproj.io/tailscale.helm.image-name" = "operatorConfig.image.repository"
+      "argocd-image-updater.argoproj.io/tailscale.helm.image-tag"  = "operatorConfig.image.tag"
+    }
   }
 
   spec {

@@ -35,7 +35,7 @@ resource "kubernetes_manifest" "litellm_secret" {
 }
 
 resource "aws_ssm_parameter" "litellm_env" {
-  for_each = toset(["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_REGION_NAME"])
+  for_each = toset(["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_REGION_NAME", "OPENAI_API_KEY"])
   #checkov:skip=CKV_AWS_337: Need to update with project key
   name        = "/homelab/${kubernetes_namespace.litellm.metadata[0].name}/env/${each.key}"
   description = "Secret for Open WebUI"

@@ -26,6 +26,10 @@ resource "argocd_application" "open_webui" {
       target_revision = "HEAD"
       helm {
         parameter {
+          name  = "image.tag"
+          value = "0.6"
+        }
+        parameter {
           name  = "ollama.enabled"
           value = "false"
         }
@@ -71,6 +75,17 @@ resource "argocd_application" "open_webui" {
                   },
                   disabled    = false,
                   autoApprove = []
+                }
+                sequential-thinking = {
+                  command = "npx",
+                  args = [
+                    "-y",
+                    "@modelcontextprotocol/server-sequential-thinking"
+                  ]
+                }
+                fetch = {
+                  command = "uvx",
+                  args    = ["mcp-server-fetch"]
                 }
               }
             }

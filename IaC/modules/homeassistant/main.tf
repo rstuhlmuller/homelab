@@ -7,6 +7,10 @@ resource "kubernetes_namespace" "homeassistant" {
 resource "argocd_application" "homeassistant" {
   metadata {
     name = "homeassistant"
+    annotations = {
+      "argocd-image-updater.argoproj.io/image-list"                    = "homeassistant=homeassistant/home-assistant:2025.x"
+      "argocd-image-updater.argoproj.io/homeassistant.update-strategy" = "semver"
+    }
   }
 
   spec {
