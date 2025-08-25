@@ -12,12 +12,6 @@ resource "kubernetes_namespace" "tailscale" {
 resource "argocd_application" "tailscale" {
   metadata {
     name = "tailscale"
-    annotations = {
-      "argocd-image-updater.argoproj.io/image-list"                = "tailscale=tailscale/k8s-operator:v1.x"
-      "argocd-image-updater.argoproj.io/tailscale.update-strategy" = "semver"
-      "argocd-image-updater.argoproj.io/tailscale.helm.image-name" = "operatorConfig.image.repository"
-      "argocd-image-updater.argoproj.io/tailscale.helm.image-tag"  = "operatorConfig.image.tag"
-    }
   }
 
   spec {
@@ -29,7 +23,7 @@ resource "argocd_application" "tailscale" {
     source {
       repo_url        = "https://pkgs.tailscale.com/helmcharts"
       chart           = "tailscale-operator"
-      target_revision = "1.82.5"
+      target_revision = "1.86.5"
       helm {
         parameter {
           name  = "image.pullPolicy"
