@@ -23,7 +23,7 @@ resource "argocd_application" "tailscale" {
     source {
       repo_url        = "https://pkgs.tailscale.com/helmcharts"
       chart           = "tailscale-operator"
-      target_revision = "1.86.5"
+      target_revision = "1.*"
       helm {
         parameter {
           name  = "image.pullPolicy"
