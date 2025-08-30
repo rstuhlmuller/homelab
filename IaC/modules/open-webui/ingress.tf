@@ -3,12 +3,9 @@ resource "kubernetes_ingress_v1" "traefik" {
   metadata {
     name      = "open-webui-ingress"
     namespace = kubernetes_namespace.open_webui.metadata[0].name
-    annotations = {
-      "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
-    }
   }
   spec {
-    ingress_class_name = "traefik"
+    ingress_class_name = "cloudflare-tunnel"
     rule {
       host = "chat.stinkyboi.com"
       http {
@@ -26,31 +23,6 @@ resource "kubernetes_ingress_v1" "traefik" {
         }
       }
     }
-    tls {
-      secret_name = "open-webui-certificate-secret"
-    }
-  }
-}
-
-resource "kubernetes_manifest" "open_webui_certificate" {
-  manifest = {
-    apiVersion = "cert-manager.io/v1"
-    kind       = "Certificate"
-    metadata = {
-      name      = "open-webui-ingressroute-certificate"
-      namespace = "open-webui"
-    }
-    spec = {
-      secretName = "open-webui-certificate-secret"
-      issuerRef = {
-        name = "cloudflare-clusterissuer"
-        kind = "ClusterIssuer"
-      }
-      dnsNames = [
-        "chat.stinkyboi.com",
-        "mcpo.chat.stinkyboi.com"
-      ]
-    }
   }
 }
 
@@ -59,14 +31,11 @@ resource "kubernetes_ingress_v1" "mcpo" {
   metadata {
     name      = "open-webui-mcpo-ingress"
     namespace = kubernetes_namespace.open_webui.metadata[0].name
-    annotations = {
-      "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
-    }
   }
   spec {
-    ingress_class_name = "traefik"
+    ingress_class_name = "cloudflare-tunnel"
     rule {
-      host = "mcpo.chat.stinkyboi.com"
+      host = "mcpo.stinkyboi.com"
       http {
         path {
           path      = "/"
@@ -81,9 +50,6 @@ resource "kubernetes_ingress_v1" "mcpo" {
           }
         }
       }
-    }
-    tls {
-      secret_name = "open-webui-certificate-secret"
     }
   }
 }
