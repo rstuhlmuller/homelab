@@ -78,6 +78,7 @@ resource "argocd_application" "grafana" {
           }
           env = {
             GF_SERVER_ROOT_URL = "https://grafana.stinkyboi.com/"
+            GF_DATABASE_WAL    = true
           }
         })
       }
