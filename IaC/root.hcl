@@ -28,11 +28,11 @@ remote_state {
     if_exists = "overwrite"
   }
   config = {
-    bucket         = lower("${local.account_name}-aws-use1-s3-tf-state")
-    key            = "${lower(local.project_name)}/${path_relative_to_include()}/terraform.tfstate"
-    region         = "us-east-1"
-    encrypt        = true
-    dynamodb_table = lower("${local.account_name}-aws-use1-ddb-tf-state-lock")
+    bucket       = lower("${local.account_name}-aws-use1-s3-tf-state")
+    key          = "${lower(local.project_name)}/${path_relative_to_include()}/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
   }
 }
 
