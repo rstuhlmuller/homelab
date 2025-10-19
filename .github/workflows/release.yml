@@ -18,7 +18,7 @@ jobs:
       contents: write # for creating releases
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
 
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4
