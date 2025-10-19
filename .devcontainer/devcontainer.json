@@ -33,5 +33,9 @@
 	"mounts": [
 		"source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind",
 		"source=${localEnv:HOME}/.kube/config,target=/home/vscode/.kube/config,type=bind"
-	]
+	],
+	"containerEnv": {
+		"TG_LOG_FORMAT": "pretty",
+		"TG_TF_FORWARD_STDOUT": true
+	}
 }
