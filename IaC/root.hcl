@@ -15,10 +15,6 @@ terraform {
     commands  = ["plan"]
     arguments = ["-out", "plan.out"]
   }
-  before_hook "before_hook" {
-    commands = ["apply", "plan"]
-    execute  = ["echo", "Running Terraform in ${path_relative_to_include()}"]
-  }
 }
 
 remote_state {
