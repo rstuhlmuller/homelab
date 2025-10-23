@@ -26,10 +26,6 @@ resource "argocd_application" "homarr" {
       target_revision = "3.13.0"
       helm {
         parameter {
-          name  = "image.tag"
-          value = "latest"
-        }
-        parameter {
           name  = "image.pullPolicy"
           value = "Always"
         }
