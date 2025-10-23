@@ -7,6 +7,10 @@ resource "kubernetes_namespace" "homarr" {
 resource "argocd_application" "homarr" {
   metadata {
     name = "homarr"
+    annotations = {
+      "argocd-image-updater.argoproj.io/image-list"             = "homarr=ghcr.io/homarr-labs/homarr:v1"
+      "argocd-image-updater.argoproj.io/homarr.update-strategy" = "semver"
+    }
   }
 
   spec {
@@ -21,10 +25,6 @@ resource "argocd_application" "homarr" {
       chart           = "homarr"
       target_revision = "3.13.0"
       helm {
-        parameter {
-          name  = "image.tag"
-          value = "latest"
-        }
         parameter {
           name  = "image.pullPolicy"
           value = "Always"
