@@ -8,8 +8,8 @@ resource "argocd_application" "homarr" {
   metadata {
     name = "homarr"
     annotations = {
-      "argocd-image-updater.argoproj.io/image-list"             = "homarr=ghcr.io/homarr-labs/homarr:1"
-      "argocd-image-updater.argoproj.io/homarr.update-strategy" = "semver"
+      "argocd-image-updater.argoproj.io/image-list"             = "homarr=ghcr.io/homarr-labs/homarr:latest"
+      "argocd-image-updater.argoproj.io/homarr.update-strategy" = "digest"
     }
   }
 
