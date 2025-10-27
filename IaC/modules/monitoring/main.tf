@@ -111,7 +111,7 @@ resource "argocd_application" "umami" {
     source {
       repo_url        = "https://charts.christianhuth.de"
       chart           = "umami"
-      target_revision = "5.0.8"
+      target_revision = "6.0.1"
       helm {
         values = yamlencode({
           ingress = {

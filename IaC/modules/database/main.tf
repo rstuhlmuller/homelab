@@ -36,6 +36,10 @@ resource "argocd_application" "postgresql" {
           name  = "image.pullPolicy"
           value = "Always"
         }
+        parameter {
+          name  = "image.repository"
+          value = "bitnamilegacy/postgresql"
+        }
       }
     }
     sync_policy {
