@@ -8,7 +8,7 @@ resource "argocd_application" "octobot" {
   metadata {
     name = "octobot"
     annotations = {
-      "argocd-image-updater.argoproj.io/image-list"              = "octobot=drakkarsoftware/octobot:2.0"
+      "argocd-image-updater.argoproj.io/image-list"              = "octobot=drakkarsoftware/octobot:2.0.x"
       "argocd-image-updater.argoproj.io/octobot.update-strategy" = "semver"
     }
   }
