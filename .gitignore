@@ -42,3 +42,4 @@ terraform.rc
 
 #Ignore vscode AI rules
 .github/copilot-instructions.md
+.terragrunt-stack/
