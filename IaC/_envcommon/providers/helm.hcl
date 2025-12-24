@@ -3,7 +3,7 @@ generate "helm_provider" {
   if_exists = "overwrite"
   contents  = <<EOF
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     config_path = "~/.kube/config"
   }
 }
