@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "minecraft" {
+resource "kubernetes_namespace_v1" "minecraft" {
   metadata {
     name = "minecraft"
   }
@@ -17,7 +17,7 @@ resource "argocd_application" "minecraft" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.minecraft.metadata[0].name
+      namespace = kubernetes_namespace_v1.minecraft.metadata[0].name
     }
 
     source {

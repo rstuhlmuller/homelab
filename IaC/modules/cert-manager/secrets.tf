@@ -1,6 +1,6 @@
 resource "aws_ssm_parameter" "cloudflare_api_key_secret" {
   #checkov:skip=CKV_AWS_337: Need to update with project key
-  name        = "/homelab/${kubernetes_namespace.cert_manager.metadata[0].name}/api_key"
+  name        = "/homelab/${kubernetes_namespace_v1.cert_manager.metadata[0].name}/api_key"
   description = "Secret for Cloudflare API key used by cert-manager"
   type        = "SecureString"
   value       = "update_me"
@@ -15,7 +15,7 @@ resource "kubernetes_manifest" "cloudflare_api_key_secret" {
     kind       = "ExternalSecret"
     metadata = {
       name      = "cloudflare-api-key-secret"
-      namespace = kubernetes_namespace.cert_manager.metadata[0].name
+      namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
     }
     spec = {
       secretStoreRef = {

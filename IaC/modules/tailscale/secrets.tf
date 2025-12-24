@@ -15,15 +15,14 @@ resource "kubernetes_manifest" "oauth_secret" {
     kind       = "ExternalSecret"
     metadata = {
       name      = "operator-oauth"
-      namespace = kubernetes_namespace.tailscale.metadata[0].name
+      namespace = kubernetes_namespace_v1.tailscale.metadata[0].name
     }
     spec = {
       secretStoreRef = {
         name = "parameterstore"
         kind = "ClusterSecretStore"
       }
-      refreshPolicy   = "Periodic"
-      refreshInterval = "10m"
+      refreshPolicy = "OnChange"
       data = [for key, value in aws_ssm_parameter.oauth_secret : {
         secretKey = key
         remoteRef = {

@@ -8,7 +8,7 @@ locals {
 resource "aws_ssm_parameter" "postgresql_secret" {
   #checkov:skip=CKV_AWS_337: Need to update with project key
   for_each = toset(local.secrets)
-  name     = "/homelab/${kubernetes_namespace.postgresql.metadata[0].name}/${each.key}"
+  name     = "/homelab/${kubernetes_namespace_v1.postgresql.metadata[0].name}/${each.key}"
   type     = "SecureString"
   value    = "update_me"
   lifecycle {
@@ -22,7 +22,7 @@ resource "kubernetes_manifest" "postgresql_secret" {
     kind       = "ExternalSecret"
     metadata = {
       name      = "postgresql-secret"
-      namespace = kubernetes_namespace.postgresql.metadata[0].name
+      namespace = kubernetes_namespace_v1.postgresql.metadata[0].name
     }
     spec = {
       secretStoreRef = {

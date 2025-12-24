@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "litellm" {
+resource "kubernetes_namespace_v1" "litellm" {
   metadata {
     name = "litellm"
   }
@@ -17,7 +17,7 @@ resource "argocd_application" "litellm" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.litellm.metadata[0].name
+      namespace = kubernetes_namespace_v1.litellm.metadata[0].name
     }
 
     source {
@@ -127,7 +127,7 @@ resource "kubernetes_manifest" "litellm_tls" {
     kind       = "Certificate"
     metadata = {
       name      = "litellm-tls"
-      namespace = kubernetes_namespace.litellm.metadata[0].name
+      namespace = kubernetes_namespace_v1.litellm.metadata[0].name
     }
     spec = {
       secretName = "litellm-tls"

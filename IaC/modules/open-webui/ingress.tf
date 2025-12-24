@@ -2,7 +2,7 @@ resource "kubernetes_ingress_v1" "traefik" {
   wait_for_load_balancer = true
   metadata {
     name      = "open-webui-ingress"
-    namespace = kubernetes_namespace.open_webui.metadata[0].name
+    namespace = kubernetes_namespace_v1.open_webui.metadata[0].name
   }
   spec {
     ingress_class_name = "cloudflare-tunnel"
@@ -30,7 +30,7 @@ resource "kubernetes_ingress_v1" "mcpo" {
   wait_for_load_balancer = true
   metadata {
     name      = "open-webui-mcpo-ingress"
-    namespace = kubernetes_namespace.open_webui.metadata[0].name
+    namespace = kubernetes_namespace_v1.open_webui.metadata[0].name
   }
   spec {
     ingress_class_name = "cloudflare-tunnel"

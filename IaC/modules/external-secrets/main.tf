@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "external_secrets" {
+resource "kubernetes_namespace_v1" "external_secrets" {
   metadata {
     name = "external-secrets"
     labels = {
@@ -13,13 +13,13 @@ resource "helm_release" "release" {
   repository = "https://charts.external-secrets.io"
   version    = "1.2.0"
   timeout    = "1500"
-  namespace  = kubernetes_namespace.external_secrets.metadata[0].name
+  namespace  = kubernetes_namespace_v1.external_secrets.metadata[0].name
 }
 
 resource "kubernetes_secret_v1" "name" {
   metadata {
     name      = "aws-ssm-secret"
-    namespace = kubernetes_namespace.external_secrets.metadata[0].name
+    namespace = kubernetes_namespace_v1.external_secrets.metadata[0].name
   }
   type = "generic"
   data = {
@@ -48,12 +48,12 @@ resource "kubernetes_manifest" "external_secrets_secret_store" {
               accessKeyIDSecretRef = {
                 name      = "aws-ssm-secret"
                 key       = "aws_access_key_id"
-                namespace = kubernetes_namespace.external_secrets.metadata[0].name
+                namespace = kubernetes_namespace_v1.external_secrets.metadata[0].name
               }
               secretAccessKeySecretRef = {
                 name      = "aws-ssm-secret"
                 key       = "aws_secret_access_key"
-                namespace = kubernetes_namespace.external_secrets.metadata[0].name
+                namespace = kubernetes_namespace_v1.external_secrets.metadata[0].name
               }
             }
           }

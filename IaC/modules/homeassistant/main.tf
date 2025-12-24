@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "homeassistant" {
+resource "kubernetes_namespace_v1" "homeassistant" {
   metadata {
     name = "homeassistant"
   }
@@ -17,7 +17,7 @@ resource "argocd_application" "homeassistant" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.homeassistant.metadata[0].name
+      namespace = kubernetes_namespace_v1.homeassistant.metadata[0].name
     }
 
     source {

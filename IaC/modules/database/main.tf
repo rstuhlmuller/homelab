@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "postgresql" {
+resource "kubernetes_namespace_v1" "postgresql" {
   metadata {
     name = "database"
   }
@@ -13,7 +13,7 @@ resource "argocd_application" "postgresql" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.postgresql.metadata[0].name
+      namespace = kubernetes_namespace_v1.postgresql.metadata[0].name
     }
     source {
       repo_url        = "https://charts.bitnami.com/bitnami"

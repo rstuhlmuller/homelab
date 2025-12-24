@@ -1,7 +1,7 @@
 resource "aws_ssm_parameter" "open_webui" {
   for_each = toset(["openai_api_key"])
   #checkov:skip=CKV_AWS_337: Need to update with project key
-  name        = "/homelab/${kubernetes_namespace.open_webui.metadata[0].name}/${each.key}"
+  name        = "/homelab/${kubernetes_namespace_v1.open_webui.metadata[0].name}/${each.key}"
   description = "Secret for Open WebUI"
   type        = "SecureString"
   value       = "update_me"
@@ -16,7 +16,7 @@ resource "kubernetes_manifest" "open_webui_secret" {
     kind       = "ExternalSecret"
     metadata = {
       name      = "open-webui-secret"
-      namespace = kubernetes_namespace.open_webui.metadata[0].name
+      namespace = kubernetes_namespace_v1.open_webui.metadata[0].name
     }
     spec = {
       secretStoreRef = {

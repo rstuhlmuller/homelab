@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "cert_manager" {
+resource "kubernetes_namespace_v1" "cert_manager" {
   metadata {
     name = "cert-manager"
   }
@@ -13,7 +13,7 @@ resource "argocd_application" "cert_manager" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.cert_manager.metadata[0].name
+      namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
     }
 
     source {

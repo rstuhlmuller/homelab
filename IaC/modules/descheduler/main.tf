@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "descheduler" {
+resource "kubernetes_namespace_v1" "descheduler" {
   metadata {
     name = "descheduler"
   }
@@ -13,7 +13,7 @@ resource "argocd_application" "descheduler" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.descheduler.metadata[0].name
+      namespace = kubernetes_namespace_v1.descheduler.metadata[0].name
     }
 
     source {
