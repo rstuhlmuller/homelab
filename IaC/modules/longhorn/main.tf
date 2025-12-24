@@ -22,23 +22,22 @@ resource "helm_release" "longhorn" {
   cleanup_on_fail   = true
   atomic            = true
 
-  set {
-    name  = "defaultSettings.defaultDataLocality"
-    value = "best-effort"
-  }
-
-  set {
-    name  = "defaultSettings.defaultReplicaAutoBalance"
-    value = "true"
-  }
-
-  set {
-    name  = "defaultSettings.defaultAllowVolumeExpansion"
-    value = "true"
-  }
-
-  set {
-    name  = "persistence.defaultClass"
-    value = "false"
-  }
+  set = [
+    {
+      name  = "defaultSettings.defaultDataLocality"
+      value = "best-effort"
+    },
+    {
+      name  = "defaultSettings.defaultReplicaAutoBalance"
+      value = "true"
+    },
+    {
+      name  = "defaultSettings.defaultAllowVolumeExpansion"
+      value = "true"
+    },
+    {
+      name  = "persistence.defaultClass"
+      value = "false"
+    }
+  ]
 }
