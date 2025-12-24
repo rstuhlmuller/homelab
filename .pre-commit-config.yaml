@@ -21,11 +21,12 @@ repos:
     rev: v2.4.1
     hooks:
     - id: codespell
-  - repo: local
+  - repo: https://github.com/bridgecrewio/checkov.git
+    rev: '3.2.495' # change to tag or sha
     hooks:
-    - id: trufflehog
-      name: TruffleHog
-      description: Detect secrets in your data with TruffleHog.
-      entry: trufflehog git file://. --since-commit HEAD --results=verified --fail
-      language: golang
-      pass_filenames: false
+      # - id: checkov
+      # - id: checkov_container
+      - id: checkov_diff
+      # - id: checkov_diff_container
+      - id: checkov_secrets
+      # - id: checkov_secrets_container
