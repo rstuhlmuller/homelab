@@ -8,7 +8,7 @@ resource "argocd_application" "n8n" {
   metadata {
     name = "n8n"
     annotations = {
-      "argocd-image-updater.argoproj.io/image-list"          = "n8n=n8nio/n8n:1.x"
+      "argocd-image-updater.argoproj.io/image-list"          = "n8n=n8nio/n8n:1.122.x"
       "argocd-image-updater.argoproj.io/n8n.update-strategy" = "semver"
     }
   }
@@ -23,12 +23,9 @@ resource "argocd_application" "n8n" {
     source {
       repo_url        = "https://github.com/8gears/n8n-helm-chart"
       path            = "charts/n8n"
-      target_revision = "1.0.10"
+      target_revision = "2.0.x"
       helm {
         values = yamlencode({
-          image = {
-            tag = "1.102.4"
-          }
           main = {
             persistence = {
               enabled = true
@@ -44,11 +41,15 @@ resource "argocd_application" "n8n" {
             }
           }
           ingress = {
-            enabled = true
+            enabled   = true
+            className = "traefik"
             hosts = [
               {
-                host  = "n8n.stinkyboi.com"
-                paths = ["/"]
+                host = "n8n.stinkyboi.com"
+                paths = [{
+                  path     = "/"
+                  pathType = "ImplementationSpecific"
+                }]
               }
             ]
             tls = [
