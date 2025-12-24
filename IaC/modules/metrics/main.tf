@@ -15,8 +15,10 @@ resource "helm_release" "release" {
   repository = "https://kubernetes-sigs.github.io/metrics-server/"
   version    = "3.13"
   namespace  = kubernetes_namespace.metrics.metadata[0].name
-  set {
-    name  = "args"
-    value = "{--kubelet-insecure-tls,--kubelet-preferred-address-types=InternalIP,Hostname,InternalDNS,ExternalDNS,ExternalIP}"
-  }
+  set = [
+    {
+      name  = "args"
+      value = "{--kubelet-insecure-tls,--kubelet-preferred-address-types=InternalIP,Hostname,InternalDNS,ExternalDNS,ExternalIP}"
+    }
+  ]
 }

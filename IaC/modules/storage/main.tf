@@ -4,22 +4,28 @@ resource "helm_release" "nfs_subdir_external_provisioner" {
   chart      = "nfs-subdir-external-provisioner"
   version    = "4.0"
 
-  set {
-    name  = "nfs.server"
-    value = "10.1.0.2"
-  }
-  set {
-    name  = "nfs.path"
-    value = "/k8sNFS"
-  }
-  set {
-    name  = "storageClass.defaultClass"
-    value = "true"
-  }
-  set {
-    name  = "storageClass.accessModes"
-    value = "ReadWriteMany"
-  }
+  set = [
+    {
+      name  = "nfs.server"
+      value = "10.1.0.2"
+    },
+    {
+      name  = "nfs.path"
+      value = "/k8sNFS"
+    },
+    {
+      name  = "storageClass.defaultClass"
+      value = "true"
+    },
+    {
+      name  = "storageClass.accessModes"
+      value = "ReadWriteMany"
+    },
+    {
+      name  = "storageClass.name"
+      value = "nfs-client"
+    }
+  ]
 }
 
 resource "helm_release" "nfs_media" {
@@ -28,22 +34,24 @@ resource "helm_release" "nfs_media" {
   chart      = "nfs-subdir-external-provisioner"
   version    = "4.0"
 
-  set {
-    name  = "nfs.server"
-    value = "10.1.0.2"
-  }
-  set {
-    name  = "nfs.path"
-    value = "/Media"
-  }
-  set {
-    name  = "storageClass.accessModes"
-    value = "ReadWriteMany"
-  }
-  set {
-    name  = "storageClass.name"
-    value = "nfs-media"
-  }
+  set = [
+    {
+      name  = "nfs.server"
+      value = "10.1.0.2"
+    },
+    {
+      name  = "nfs.path"
+      value = "/Media"
+    },
+    {
+      name  = "storageClass.accessModes"
+      value = "ReadWriteMany"
+    },
+    {
+      name  = "storageClass.name"
+      value = "nfs-media"
+    }
+  ]
 }
 
 resource "helm_release" "nfs_database" {
@@ -52,20 +60,22 @@ resource "helm_release" "nfs_database" {
   chart      = "nfs-subdir-external-provisioner"
   version    = "4.0"
 
-  set {
-    name  = "nfs.server"
-    value = "10.1.0.2"
-  }
-  set {
-    name  = "nfs.path"
-    value = "/k8sPostgres"
-  }
-  set {
-    name  = "storageClass.accessModes"
-    value = "ReadWriteMany"
-  }
-  set {
-    name  = "storageClass.name"
-    value = "nfs-database"
-  }
+  set = [
+    {
+      name  = "nfs.server"
+      value = "10.1.0.2"
+    },
+    {
+      name  = "nfs.path"
+      value = "/k8sPostgres"
+    },
+    {
+      name  = "storageClass.accessModes"
+      value = "ReadWriteMany"
+    },
+    {
+      name  = "storageClass.name"
+      value = "nfs-database"
+    }
+  ]
 }
