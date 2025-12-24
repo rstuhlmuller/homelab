@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "longhorn_system" {
+resource "kubernetes_namespace_v1" "longhorn_system" {
   metadata {
     name = "longhorn-system"
 
@@ -14,7 +14,7 @@ resource "helm_release" "longhorn" {
   name       = "longhorn"
   repository = "https://charts.longhorn.io"
   chart      = "longhorn"
-  namespace  = kubernetes_namespace.longhorn_system.metadata[0].name
+  namespace  = kubernetes_namespace_v1.longhorn_system.metadata[0].name
 
   # Add CRD management settings
   dependency_update = true

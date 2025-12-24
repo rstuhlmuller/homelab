@@ -2,7 +2,7 @@ resource "kubernetes_ingress_v1" "traefik" {
   wait_for_load_balancer = true
   metadata {
     name      = "technitium"
-    namespace = kubernetes_namespace.technitium.metadata[0].name
+    namespace = kubernetes_namespace_v1.technitium.metadata[0].name
     annotations = {
       "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
     }
@@ -38,7 +38,7 @@ resource "kubernetes_manifest" "technitium_certificate" {
     kind       = "Certificate"
     metadata = {
       name      = "technitium-ingressroute-certificate"
-      namespace = kubernetes_namespace.technitium.metadata[0].name
+      namespace = kubernetes_namespace_v1.technitium.metadata[0].name
     }
     spec = {
       secretName = "technitium-certificate-secret"

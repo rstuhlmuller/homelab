@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "metallb_system" {
+resource "kubernetes_namespace_v1" "metallb_system" {
   metadata {
     name = "metallb-system"
 
@@ -14,7 +14,7 @@ resource "helm_release" "metallb" {
   name       = "metallb"
   repository = "https://metallb.github.io/metallb"
   chart      = "metallb"
-  namespace  = kubernetes_namespace.metallb_system.metadata[0].name
+  namespace  = kubernetes_namespace_v1.metallb_system.metadata[0].name
 
   wait = true
 }
@@ -25,7 +25,7 @@ resource "kubernetes_manifest" "ip_address_pool" {
     kind       = "IPAddressPool"
     metadata = {
       name      = "first-pool"
-      namespace = kubernetes_namespace.metallb_system.metadata[0].name
+      namespace = kubernetes_namespace_v1.metallb_system.metadata[0].name
     }
     spec = {
       addresses = [
@@ -42,7 +42,7 @@ resource "kubernetes_manifest" "l2_advertisement" {
     kind       = "L2Advertisement"
     metadata = {
       name      = "l2-advertisement"
-      namespace = kubernetes_namespace.metallb_system.metadata[0].name
+      namespace = kubernetes_namespace_v1.metallb_system.metadata[0].name
     }
     spec = {}
   }

@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "traefik" {
+resource "kubernetes_namespace_v1" "traefik" {
   metadata {
     name = "traefik"
   }
@@ -8,7 +8,7 @@ resource "helm_release" "traefik" {
   name       = "traefik"
   repository = "https://helm.traefik.io/traefik"
   chart      = "traefik"
-  namespace  = kubernetes_namespace.traefik.metadata[0].name
+  namespace  = kubernetes_namespace_v1.traefik.metadata[0].name
   set = [
     {
       name  = "image.pullPolicy"
@@ -51,7 +51,7 @@ resource "kubernetes_manifest" "traefik_certificate" {
     kind       = "Certificate"
     metadata = {
       name      = "traefik"
-      namespace = kubernetes_namespace.traefik.metadata[0].name
+      namespace = kubernetes_namespace_v1.traefik.metadata[0].name
     }
     spec = {
       secretName = "traefik-certificate-secret"

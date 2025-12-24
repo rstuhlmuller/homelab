@@ -15,7 +15,7 @@ resource "kubernetes_manifest" "secret" {
     kind       = "ExternalSecret"
     metadata = {
       name      = "cloudflare-secret"
-      namespace = kubernetes_namespace.cloudflare-tunnel.metadata[0].name
+      namespace = kubernetes_namespace_v1.cloudflare-tunnel.metadata[0].name
     }
     spec = {
       secretStoreRef = {

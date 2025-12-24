@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "octobot" {
+resource "kubernetes_namespace_v1" "octobot" {
   metadata {
     name = "octobot"
   }
@@ -17,7 +17,7 @@ resource "argocd_application" "octobot" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.octobot.metadata[0].name
+      namespace = kubernetes_namespace_v1.octobot.metadata[0].name
     }
 
     source {
@@ -60,7 +60,7 @@ resource "kubernetes_manifest" "octobot_tls" {
     kind       = "Certificate"
     metadata = {
       name      = "octobot-tls"
-      namespace = kubernetes_namespace.octobot.metadata[0].name
+      namespace = kubernetes_namespace_v1.octobot.metadata[0].name
     }
     spec = {
       secretName = "octobot-tls"

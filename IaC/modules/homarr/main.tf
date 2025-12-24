@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "homarr" {
+resource "kubernetes_namespace_v1" "homarr" {
   metadata {
     name = "homarr"
   }
@@ -17,7 +17,7 @@ resource "argocd_application" "homarr" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.homarr.metadata[0].name
+      namespace = kubernetes_namespace_v1.homarr.metadata[0].name
     }
 
     source {

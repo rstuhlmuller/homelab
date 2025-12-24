@@ -1,7 +1,7 @@
 resource "aws_ssm_parameter" "umami" {
   for_each = toset(["umami_database_url"])
   #checkov:skip=CKV_AWS_337: Need to update with project key
-  name             = "/homelab/${kubernetes_namespace.monitoring.metadata[0].name}/${each.key}"
+  name             = "/homelab/${kubernetes_namespace_v1.monitoring.metadata[0].name}/${each.key}"
   description      = "Secret for Umami"
   type             = "SecureString"
   value_wo         = "update_me"
@@ -14,7 +14,7 @@ resource "kubernetes_manifest" "umami_secret" {
     kind       = "ExternalSecret"
     metadata = {
       name      = "umami-secret"
-      namespace = kubernetes_namespace.monitoring.metadata[0].name
+      namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
     }
     spec = {
       secretStoreRef = {

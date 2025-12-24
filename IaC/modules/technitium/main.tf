@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "technitium" {
+resource "kubernetes_namespace_v1" "technitium" {
   metadata {
     name = "technitium"
     labels = {
@@ -10,7 +10,7 @@ resource "kubernetes_namespace" "technitium" {
 resource "kubernetes_persistent_volume_claim" "technitium_config" {
   metadata {
     name      = "technitium-config-pvc"
-    namespace = kubernetes_namespace.technitium.metadata[0].name
+    namespace = kubernetes_namespace_v1.technitium.metadata[0].name
   }
 
   spec {
@@ -37,7 +37,7 @@ resource "argocd_application" "technitium" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.technitium.metadata[0].name
+      namespace = kubernetes_namespace_v1.technitium.metadata[0].name
     }
 
     source {
@@ -47,7 +47,7 @@ resource "argocd_application" "technitium" {
       helm {
         parameter {
           name  = "controller.namespace"
-          value = kubernetes_namespace.technitium.metadata[0].name
+          value = kubernetes_namespace_v1.technitium.metadata[0].name
         }
         parameter {
           name  = "image.tag"

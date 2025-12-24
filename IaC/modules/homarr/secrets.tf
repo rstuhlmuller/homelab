@@ -1,7 +1,7 @@
 resource "aws_ssm_parameter" "db_secret" {
   for_each = toset(["db-encryption-key", "db-url", "mysql-root-password", "mysql-password"])
   #checkov:skip=CKV_AWS_337: Need to update with project key
-  name        = "/homelab/${kubernetes_namespace.homarr.metadata[0].name}/${each.key}"
+  name        = "/homelab/${kubernetes_namespace_v1.homarr.metadata[0].name}/${each.key}"
   description = "Secret for db-secret key used by homarr"
   type        = "SecureString"
   value       = "update_me"
@@ -16,15 +16,14 @@ resource "kubernetes_manifest" "db_secret" {
     kind       = "ExternalSecret"
     metadata = {
       name      = "db-secret"
-      namespace = kubernetes_namespace.homarr.metadata[0].name
+      namespace = kubernetes_namespace_v1.homarr.metadata[0].name
     }
     spec = {
       secretStoreRef = {
         name = "parameterstore"
         kind = "ClusterSecretStore"
       }
-      refreshPolicy   = "Periodic"
-      refreshInterval = "10m"
+      refreshPolicy = "OnChange"
       data = [for key, value in aws_ssm_parameter.db_secret : {
         secretKey = key
         remoteRef = {

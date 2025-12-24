@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "tailscale" {
+resource "kubernetes_namespace_v1" "tailscale" {
   metadata {
     name = "tailscale"
     labels = {
@@ -18,7 +18,7 @@ resource "argocd_application" "tailscale" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.tailscale.metadata[0].name
+      namespace = kubernetes_namespace_v1.tailscale.metadata[0].name
     }
     source {
       repo_url        = "https://pkgs.tailscale.com/helmcharts"

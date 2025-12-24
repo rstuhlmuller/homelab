@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "open_webui" {
+resource "kubernetes_namespace_v1" "open_webui" {
   metadata {
     name = "open-webui"
   }
@@ -17,7 +17,7 @@ resource "argocd_application" "open_webui" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.open_webui.metadata[0].name
+      namespace = kubernetes_namespace_v1.open_webui.metadata[0].name
     }
 
     source {

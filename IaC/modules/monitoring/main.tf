@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "monitoring" {
+resource "kubernetes_namespace_v1" "monitoring" {
   metadata {
     name = "monitoring"
     labels = {
@@ -18,7 +18,7 @@ resource "argocd_application" "prometheus" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.monitoring.metadata[0].name
+      namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
     }
 
     source {
@@ -50,7 +50,7 @@ resource "argocd_application" "grafana" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.monitoring.metadata[0].name
+      namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
     }
 
     source {
@@ -105,7 +105,7 @@ resource "argocd_application" "umami" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.monitoring.metadata[0].name
+      namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
     }
 
     source {
@@ -155,7 +155,7 @@ resource "kubernetes_manifest" "monitoring_certificate" {
     kind       = "Certificate"
     metadata = {
       name      = "monitoring-ingressroute-certificate"
-      namespace = kubernetes_namespace.monitoring.metadata[0].name
+      namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
     }
     spec = {
       secretName = "monitoring-certificate-secret"
@@ -175,7 +175,7 @@ resource "kubernetes_manifest" "monitoring_certificate" {
 resource "kubernetes_ingress_v1" "umami_tailscale_funnel" {
   metadata {
     name      = "umami-tailscale-funnel"
-    namespace = kubernetes_namespace.monitoring.metadata[0].name
+    namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
     annotations = {
       "tailscale.com/funnel" = "true"
     }

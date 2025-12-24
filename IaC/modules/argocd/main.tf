@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "argocd" {
+resource "kubernetes_namespace_v1" "argocd" {
   metadata {
     name = "argocd"
     labels = {
@@ -13,7 +13,7 @@ resource "helm_release" "release" {
   repository = "https://argoproj.github.io/argo-helm"
   version    = "9.1.7"
   timeout    = "1500"
-  namespace  = kubernetes_namespace.argocd.metadata[0].name
+  namespace  = kubernetes_namespace_v1.argocd.metadata[0].name
 
   values = [yamlencode({
     global = {
@@ -111,7 +111,7 @@ resource "helm_release" "argocd_image_updater" {
   chart      = "argocd-image-updater"
   repository = "https://argoproj.github.io/argo-helm"
   version    = "1.0.2"
-  namespace  = kubernetes_namespace.argocd.metadata[0].name
+  namespace  = kubernetes_namespace_v1.argocd.metadata[0].name
   wait       = true
 }
 
@@ -121,7 +121,7 @@ resource "kubernetes_manifest" "argocd_certificate" {
     kind       = "Certificate"
     metadata = {
       name      = "argocd"
-      namespace = kubernetes_namespace.argocd.metadata[0].name
+      namespace = kubernetes_namespace_v1.argocd.metadata[0].name
     }
     spec = {
       secretName = "argocd-server-tls"
@@ -154,7 +154,7 @@ resource "kubernetes_manifest" "argocd_secret" {
     kind       = "ExternalSecret"
     metadata = {
       name      = "dex-oidc-secret"
-      namespace = kubernetes_namespace.argocd.metadata[0].name
+      namespace = kubernetes_namespace_v1.argocd.metadata[0].name
     }
     spec = {
       secretStoreRef = {

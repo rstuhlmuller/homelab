@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "cloudflare-tunnel" {
+resource "kubernetes_namespace_v1" "cloudflare-tunnel" {
   metadata {
     name = "cloudflare-tunnel"
   }
@@ -13,7 +13,7 @@ resource "argocd_application" "cloudflare-tunnel" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.cloudflare-tunnel.metadata[0].name
+      namespace = kubernetes_namespace_v1.cloudflare-tunnel.metadata[0].name
     }
     source {
       repo_url        = "https://helm.strrl.dev"

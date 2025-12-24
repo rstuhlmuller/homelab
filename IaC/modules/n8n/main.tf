@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "n8n" {
+resource "kubernetes_namespace_v1" "n8n" {
   metadata {
     name = "n8n"
   }
@@ -17,7 +17,7 @@ resource "argocd_application" "n8n" {
     project = "default"
     destination {
       server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace.n8n.metadata[0].name
+      namespace = kubernetes_namespace_v1.n8n.metadata[0].name
     }
 
     source {
@@ -76,7 +76,7 @@ resource "kubernetes_manifest" "n8n_tls" {
     kind       = "Certificate"
     metadata = {
       name      = "n8n-tls"
-      namespace = kubernetes_namespace.n8n.metadata[0].name
+      namespace = kubernetes_namespace_v1.n8n.metadata[0].name
     }
     spec = {
       secretName = "n8n-tls"
@@ -94,7 +94,7 @@ resource "kubernetes_manifest" "n8n_tls" {
 resource "kubernetes_ingress_v1" "n8n_tailscale_funnel" {
   metadata {
     name      = "n8n-tailscale-funnel"
-    namespace = kubernetes_namespace.n8n.metadata[0].name
+    namespace = kubernetes_namespace_v1.n8n.metadata[0].name
     annotations = {
       "tailscale.com/funnel" = "true"
     }
