@@ -2,7 +2,7 @@ resource "helm_release" "nfs_subdir_external_provisioner" {
   name       = "nfs-subdir-external-provisioner"
   repository = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
   chart      = "nfs-subdir-external-provisioner"
-  version    = "4.0"
+  version    = "4.0.18"
 
   set = [
     {
@@ -32,7 +32,7 @@ resource "helm_release" "nfs_media" {
   name       = "nfs-subdir-external-provisioner-media"
   repository = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
   chart      = "nfs-subdir-external-provisioner"
-  version    = "4.0"
+  version    = "4.0.18"
 
   set = [
     {
@@ -58,7 +58,7 @@ resource "helm_release" "nfs_database" {
   name       = "nfs-subdir-external-provisioner-database"
   repository = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner"
   chart      = "nfs-subdir-external-provisioner"
-  version    = "4.0"
+  version    = "4.0.18"
 
   set = [
     {
