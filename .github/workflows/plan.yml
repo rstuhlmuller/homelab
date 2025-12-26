@@ -48,8 +48,10 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
 
-      - name: Plan
+      - name: Install Terragrunt and OpenTofu
         uses: gruntwork-io/terragrunt-action@v3
-        with:
-          tg_dir: ${{ env.working_dir }}
-          tg_command: 'plan'
+
+      - name: Run terragrunt plan
+        working-directory: ${{ env.working_dir }}
+        run:
+          terragrunt run plan -all --non-interactive
