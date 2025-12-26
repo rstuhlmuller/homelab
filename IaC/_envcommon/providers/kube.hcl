@@ -3,8 +3,7 @@ generate "kube_provider" {
   if_exists = "overwrite"
   contents  = <<EOF
 provider "kubernetes" {
-  host        = "https://10.1.0.199:6443"
-  config_path = "~/.kube/config"
+  config_path = pathexpand("~/.kube/config")
 }
 EOF
 }
