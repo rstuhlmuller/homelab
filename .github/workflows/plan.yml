@@ -51,9 +51,11 @@ jobs:
           tags: tag:ci
           statedir: /tmp/tailscale-state/
 
-      - uses: actions-hub/kubectl@v1.35.0
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      - name: Setup kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
 
       - name: Run terragrunt plan
         working-directory: ${{ env.working_dir }}
