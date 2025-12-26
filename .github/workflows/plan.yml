@@ -50,6 +50,7 @@ jobs:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
+          exit-node: homelab-vpn
 
       - uses: actions-hub/kubectl@v1.35.0
         env:
