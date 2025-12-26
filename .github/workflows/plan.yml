@@ -41,6 +41,10 @@ jobs:
           role-to-assume: arn:aws:iam::716182248480:role/Github-TF-State
           role-session-name: github-actions-session
 
+      - uses: actions-hub/kubectl@v1.35.0
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+
       - name: Tailscale
         uses: tailscale/github-action@v4
         with:
