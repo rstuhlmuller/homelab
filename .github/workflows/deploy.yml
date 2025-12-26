@@ -33,6 +33,9 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v4
 
+      - name: Install Terragrunt and OpenTofu
+        uses: gruntwork-io/terragrunt-action@v3
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v5.1.1
         with:
@@ -43,12 +46,13 @@ jobs:
       - name: Tailscale
         uses: tailscale/github-action@v4
         with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          authkey: ${{ secrets.TS_AUTH_KEY }}
           tags: tag:ci
+          statedir: /tmp/tailscale-state/
 
-      - name: Install Terragrunt and OpenTofu
-        uses: gruntwork-io/terragrunt-action@v3
+      - uses: actions-hub/kubectl@v1.35.0
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
 
       - name: Run terragrunt apply
         working-directory: ${{ env.working_dir }}
