@@ -47,7 +47,7 @@ jobs:
       - name: Tailscale
         uses: tailscale/github-action@v4
         with:
-          authkey: ${{ secrets.TS_AUTHKEY }}
+          authkey: ${{ secrets.TS_AUTH_KEY }}
           tags: tag:ci
           statedir: /tmp/tailscale-state/
 
