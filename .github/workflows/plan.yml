@@ -62,4 +62,4 @@ jobs:
       - name: Run terragrunt plan
         working-directory: ${{ env.working_dir }}
         run:
-          terragrunt run --all --filter-affected -- plan --summary-per-unit
+          terragrunt run --all --experiment=filter-flag --filter-affected -- plan --summary-per-unit
