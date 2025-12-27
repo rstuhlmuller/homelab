@@ -35,9 +35,6 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v4
 
-      - name: Install Terragrunt and OpenTofu
-        uses: gruntwork-io/terragrunt-action@v3
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v5.1.1
         with:
@@ -56,7 +53,10 @@ jobs:
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
 
-      - name: Run terragrunt apply
-        working-directory: ${{ env.working_dir }}
-        run:
-          terragrunt run --all --non-interactive -- apply
+      - name: Install Terragrunt and OpenTofu
+        uses: gruntwork-io/terragrunt-action@v3
+        with:
+          tg_dir: ${{ env.working_dir }}
+          tg_command: 'run --all --non-interactive-- apply'
+          tg_comment: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
