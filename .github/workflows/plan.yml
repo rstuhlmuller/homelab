@@ -10,6 +10,7 @@ on:
 permissions:
   contents: read
   id-token: write
+  pull-requests: write
 
 env:
   working_dir: IaC/production/homelab
@@ -36,9 +37,6 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v4
 
-      - name: Install Terragrunt and OpenTofu
-        uses: gruntwork-io/terragrunt-action@v3
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v5.1.1
         with:
@@ -59,7 +57,10 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
 
-      - name: Run terragrunt plan
-        working-directory: ${{ env.working_dir }}
-        run:
-          terragrunt run --all --non-interactive --summary-per-unit -- plan
+      - name: Install Terragrunt and OpenTofu
+        uses: gruntwork-io/terragrunt-action@v3
+        with:
+          tg_dir: ${{ env.working_dir }}
+          tg_command: 'run --all --non-interactive --summary-per-unit -- plan'
+          tg_comment: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
