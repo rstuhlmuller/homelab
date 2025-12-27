@@ -49,14 +49,16 @@ jobs:
           tags: tag:ci
           statedir: /tmp/tailscale-state/
 
-      - uses: actions-hub/kubectl@v1.35.0
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      - name: Setup kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
 
       - name: Install Terragrunt and OpenTofu
         uses: gruntwork-io/terragrunt-action@v3
         with:
           tg_dir: ${{ env.working_dir }}
-          tg_command: 'run --all --non-interactive-- apply'
+          tg_command: 'run --all --non-interactive -- apply'
           tg_comment: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
