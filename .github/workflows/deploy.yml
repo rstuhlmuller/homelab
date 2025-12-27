@@ -29,6 +29,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [ checks ]
+    concurrency:
+      group: terragrunt
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v4
