@@ -60,4 +60,4 @@ jobs:
       - name: Run terragrunt plan
         working-directory: ${{ env.working_dir }}
         run:
-          terragrunt run -all --non-interactive --summary-per-unit --filter-affected -- plan
+          terragrunt run --all --filter-affected -- plan --summary-per-unit
