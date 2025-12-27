@@ -62,4 +62,4 @@ jobs:
       - name: Run terragrunt plan
         working-directory: ${{ env.working_dir }}
         run:
-          terragrunt run --all --experiment=filter-flag --filter '[${{ github.ref }}... ${{ github.base_ref }}]' --summary-per-unit -- plan
+          terragrunt run --all --experiment=filter-flag --filter '[${{ github.base_ref }}... ${{ github.branch }}]' --summary-per-unit -- plan
