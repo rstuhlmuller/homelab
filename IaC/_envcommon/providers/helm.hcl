@@ -4,7 +4,7 @@ generate "helm_provider" {
   contents  = <<EOF
 provider "helm" {
   kubernetes = {
-    config_path = "~/.kube/config"
+    config_path = pathexpand("~/.kube/config")
   }
 }
 EOF
