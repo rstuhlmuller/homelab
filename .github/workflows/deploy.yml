@@ -1,0 +1,62 @@
+name: "Terragrunt Deploy"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  working_dir: IaC/production/homelab
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+
+      - name: Check terragrunt HCL
+        uses: gruntwork-io/terragrunt-action@v3
+        with:
+          tg_dir: ${{ env.working_dir }}
+          tg_command: 'hcl fmt --check --diff'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ checks ]
+    concurrency:
+      group: terragrunt
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v5.1.1
+        with:
+          aws-region: us-west-2
+          role-to-assume: arn:aws:iam::716182248480:role/Github-TF-State
+          role-session-name: github-actions-session
+
+      - name: Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          authkey: ${{ secrets.TS_AUTH_KEY }}
+          tags: tag:ci
+          statedir: /tmp/tailscale-state/
+
+      - uses: actions-hub/kubectl@v1.35.0
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+
+      - name: Install Terragrunt and OpenTofu
+        uses: gruntwork-io/terragrunt-action@v3
+        with:
+          tg_dir: ${{ env.working_dir }}
+          tg_command: 'run --all --non-interactive-- apply'
+          tg_comment: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
