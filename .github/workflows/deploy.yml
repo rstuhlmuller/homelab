@@ -57,4 +57,4 @@ jobs:
       - name: Run terragrunt apply
         working-directory: ${{ env.working_dir }}
         run:
-          terragrunt run apply -all --non-interactive
+          terragrunt run apply -all --non-interactive --filter-affected
