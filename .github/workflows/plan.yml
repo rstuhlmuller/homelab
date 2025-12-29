@@ -65,5 +65,5 @@ jobs:
         with:
           tg_dir: ${{ env.working_dir }}
           tg_command: 'run --all --non-interactive --summary-per-unit -- plan'
-          tg_comment: true
+          tg_comment: 1
           github_token: ${{ secrets.GITHUB_TOKEN }}
