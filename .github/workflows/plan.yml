@@ -6,6 +6,9 @@ on:
     types: [opened, synchronize, reopened, edited]
     branches:
       - main
+    paths:
+      - 'IaC/**'
+      - '.github/workflows/plan.yml'
 
 permissions:
   contents: read
@@ -57,7 +60,7 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
 
-      - name: Install Terragrunt and OpenTofu
+      - name: Terragrunt Plan
         uses: gruntwork-io/terragrunt-action@95fc057922e3c3d4cc021a81a213f088f333ddef # v3
         with:
           tg_dir: ${{ env.working_dir }}
