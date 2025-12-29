@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
       - name: Check terragrunt HCL
-        uses: gruntwork-io/terragrunt-action@v3
+        uses: gruntwork-io/terragrunt-action@95fc057922e3c3d4cc021a81a213f088f333ddef # v3
         with:
           tg_dir: ${{ env.working_dir }}
           tg_command: 'hcl fmt --check --diff'
@@ -38,14 +38,14 @@ jobs:
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v5.1.1
+        uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
         with:
           aws-region: us-west-2
           role-to-assume: arn:aws:iam::716182248480:role/Github-TF-State
           role-session-name: github-actions-session
 
       - name: Tailscale
-        uses: tailscale/github-action@v4
+        uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # v4
         with:
           authkey: ${{ secrets.TS_AUTH_KEY }}
           tags: tag:ci
@@ -58,7 +58,7 @@ jobs:
           chmod 600 $HOME/.kube/config
 
       - name: Install Terragrunt and OpenTofu
-        uses: gruntwork-io/terragrunt-action@v3
+        uses: gruntwork-io/terragrunt-action@95fc057922e3c3d4cc021a81a213f088f333ddef # v3
         with:
           tg_dir: ${{ env.working_dir }}
           tg_command: 'run --all --non-interactive --summary-per-unit -- plan'
