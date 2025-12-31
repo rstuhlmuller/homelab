@@ -40,6 +40,10 @@ resource "argocd_application" "postgresql" {
           name  = "image.repository"
           value = "bitnamilegacy/postgresql"
         }
+        parameter {
+          name  = "metrics.enabled"
+          value = "true"
+        }
       }
     }
     sync_policy {
