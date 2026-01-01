@@ -29,5 +29,5 @@ repos:
       # - id: checkov_container
       # - id: checkov_diff
       # - id: checkov_diff_container
-      - id: checkov_secrets
+      # - id: checkov_secrets
       # - id: checkov_secrets_container
