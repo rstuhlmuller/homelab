@@ -38,6 +38,14 @@ resource "argocd_application" "prometheus" {
         self_heal = true
       }
     }
+
+    source {
+      repo_url        = "https://prometheus-community.github.io/helm-charts"
+      chart           = "prometheus-operator"
+      target_revision = "27.13.0"
+      helm {
+      }
+    }
   }
 }
 
