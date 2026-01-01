@@ -41,7 +41,7 @@ resource "argocd_application" "prometheus" {
 
     source {
       repo_url        = "https://prometheus-community.github.io/helm-charts"
-      chart           = "prometheus-operator"
+      chart           = "kube-prometheus-stack"
       target_revision = "27.13.0"
       helm {
       }

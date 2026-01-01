@@ -38,7 +38,7 @@ resource "argocd_application" "postgresql" {
         }
         parameter {
           name  = "image.repository"
-          value = "bitnamilegacy/postgresql"
+          value = "bitnami/postgresql"
         }
         parameter {
           name  = "global.postgresql.auth.database"
