@@ -2,7 +2,7 @@ name: PR Agent
 
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review, edited, synchronize]
+    types: [opened, reopened, ready_for_review, review_requested]
   issue_comment:
 
 permissions:
@@ -26,9 +26,3 @@ jobs:
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Enable/disable automatic tools
-          github_action_config.auto_review: "true"
-          github_action_config.auto_describe: "true"
-          github_action_config.auto_improve: "true"
-          # Configure which PR events trigger the action
-          github_action_config.pr_actions: '["opened", "reopened", "ready_for_review", "review_requested"]'
