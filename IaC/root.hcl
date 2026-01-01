@@ -8,6 +8,7 @@ locals {
   account_name = local.account_vars.account_name
   project_name = local.common_vars.project_name
   date         = formatdate("EEE MMM DD hh:mm:ss ZZZ YYYY", timestamp())
+  test         = "This is a test"
 }
 
 terraform {
