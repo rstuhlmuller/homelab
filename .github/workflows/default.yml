@@ -13,7 +13,7 @@ on:
 
 jobs:
   check:
-    uses: rstuhlmuller/workflows/.github/workflows/default.yml@main
+    uses: stuhlmuller/workflows/.github/workflows/default.yml@main
     with:
       checkov: false
       merge-checks-timeout: 300

@@ -38,10 +38,18 @@ resource "argocd_application" "postgresql" {
         }
         parameter {
           name  = "image.repository"
-          value = "bitnamilegacy/postgresql"
+          value = "bitnami/postgresql"
+        }
+        parameter {
+          name  = "global.postgresql.auth.database"
+          value = "metrics"
         }
         parameter {
           name  = "metrics.enabled"
+          value = "true"
+        }
+        parameter {
+          name  = "metrics.serviceMonitor.enabled"
           value = "true"
         }
       }
