@@ -17,3 +17,5 @@ jobs:
     with:
       checkov: false
       merge-checks-timeout: 300
+  ai-review:
+    uses: stuhlmuller/workflows/.github/workflows/review-bot.yml@main
