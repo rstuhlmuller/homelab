@@ -11,7 +11,7 @@ resource "kubernetes_namespace_v1" "monitoring" {
 
 resource "argocd_application" "prometheus" {
   metadata {
-    name = "kube-prometheus-stack"
+    name = "prometheus"
   }
 
   spec {
