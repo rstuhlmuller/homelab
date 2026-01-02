@@ -23,7 +23,7 @@ resource "argocd_application" "prometheus" {
 
     source {
       repo_url        = "https://prometheus-community.github.io/helm-charts"
-      chart           = "prometheus"
+      chart           = "kube-prometheus-stack"
       target_revision = "27.13.0"
       helm {
         parameter {
@@ -32,19 +32,13 @@ resource "argocd_application" "prometheus" {
         }
       }
     }
+
     sync_policy {
       automated {
         prune     = true
         self_heal = true
       }
-    }
-
-    source {
-      repo_url        = "https://prometheus-community.github.io/helm-charts"
-      chart           = "kube-prometheus-stack"
-      target_revision = "27.13.0"
-      helm {
-      }
+      sync_options = ["ServerSideApply=true"]
     }
   }
 }
