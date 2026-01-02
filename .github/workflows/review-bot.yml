@@ -1,4 +1,4 @@
-name: "Default Checks"
+name: "AI Review"
 
 permissions:
   issues: write
