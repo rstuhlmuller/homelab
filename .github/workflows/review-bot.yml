@@ -1,0 +1,20 @@
+name: "Default Checks"
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, review_requested]
+  issue_comment:
+
+jobs:
+  ai-review:
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: read
+    uses: stuhlmuller/workflows/.github/workflows/review-bot.yml@main
+    secrets: inherit

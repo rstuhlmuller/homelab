@@ -17,10 +17,3 @@ jobs:
     with:
       checkov: false
       merge-checks-timeout: 300
-  ai-review:
-    permissions:
-      contents: read
-      pull-requests: write
-      issues: write
-    uses: stuhlmuller/workflows/.github/workflows/review-bot.yml@main
-    secrets: inherit
