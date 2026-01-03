@@ -38,7 +38,11 @@ resource "argocd_application" "postgresql" {
         }
         parameter {
           name  = "image.repository"
-          value = "bitnamilegacy/postgresql"
+          value = "bitnamisecure/postgresql"
+        }
+        parameter {
+          name  = "image.tag"
+          value = "latest"
         }
         parameter {
           name  = "global.postgresql.auth.database"
@@ -50,7 +54,11 @@ resource "argocd_application" "postgresql" {
         }
         parameter {
           name  = "metrics.image.repository"
-          value = "bitnamilegacy/postgres-exporter"
+          value = "bitnamisecure/postgres-exporter"
+        }
+        parameter {
+          name  = "metrics.image.tag"
+          value = "latest"
         }
         parameter {
           name  = "metrics.serviceMonitor.enabled"
@@ -83,37 +91,37 @@ resource "argocd_application" "postgresql" {
   }
 }
 
-# resource "kubernetes_manifest" "postgresql_image_updater" {
-#   manifest = {
-#     apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
-#     kind       = "ImageUpdater"
-#     metadata = {
-#       name      = "postgresql-image-updater"
-#       namespace = kubernetes_namespace_v1.postgresql.metadata[0].name
-#     }
-#   spec = {
-#     namespace = "argocd"
-#     applicationRefs = [
-#       {
-#         namePattern = "postgresql"
-#         images = [
-#           {
-#             alias     = "postgresql"
-#             imageName = "bitnamisecure/postgresql"
-#             commonUpdateSettings = {
-#               updateStrategy = "newest-build"
-#             }
-#           },
-#           {
-#             alias     = "postgres-exporter"
-#             imageName = "bitnamisecure/postgres-exporter"
-#             commonUpdateSettings = {
-#               updateStrategy = "newest-build"
-#             }
-#           }
-#         ]
-#       }
-#     ]
-#     }
-#   }
-# }
+resource "kubernetes_manifest" "postgresql_image_updater" {
+  manifest = {
+    apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
+    kind       = "ImageUpdater"
+    metadata = {
+      name      = "postgresql-image-updater"
+      namespace = kubernetes_namespace_v1.postgresql.metadata[0].name
+    }
+    spec = {
+      namespace = "argocd"
+      applicationRefs = [
+        {
+          namePattern = "postgresql"
+          images = [
+            {
+              alias     = "postgresql"
+              imageName = "bitnamisecure/postgresql"
+              commonUpdateSettings = {
+                updateStrategy = "newest-build"
+              }
+            },
+            {
+              alias     = "postgres-exporter"
+              imageName = "bitnamisecure/postgres-exporter"
+              commonUpdateSettings = {
+                updateStrategy = "newest-build"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
