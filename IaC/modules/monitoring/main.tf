@@ -24,7 +24,7 @@ resource "argocd_application" "prometheus" {
     source {
       repo_url        = "https://prometheus-community.github.io/helm-charts"
       chart           = "kube-prometheus-stack"
-      target_revision = "27.13.0"
+      target_revision = "80.10.0"
       helm {
         parameter {
           name  = "alertmanager.enabled"
