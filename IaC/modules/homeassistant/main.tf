@@ -7,10 +7,6 @@ resource "kubernetes_namespace_v1" "homeassistant" {
 resource "argocd_application" "homeassistant" {
   metadata {
     name = "homeassistant"
-    annotations = {
-      "argocd-image-updater.argoproj.io/image-list"                    = "homeassistant=homeassistant/home-assistant:2025.x"
-      "argocd-image-updater.argoproj.io/homeassistant.update-strategy" = "semver"
-    }
   }
 
   spec {
@@ -82,6 +78,34 @@ resource "kubernetes_manifest" "certificate" {
       }
       dnsNames = [
         "home.stinkyboi.com"
+      ]
+    }
+  }
+}
+
+resource "kubernetes_manifest" "homeassistant_image_updater" {
+  manifest = {
+    apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
+    kind       = "ImageUpdater"
+    metadata = {
+      name      = "homeassistant-image-updater"
+      namespace = kubernetes_namespace_v1.homeassistant.metadata[0].name
+    }
+    spec = {
+      namespace = "argocd"
+      applicationRefs = [
+        {
+          namePattern = "homeassistant"
+          images = [
+            {
+              alias     = "homeassistant"
+              imageName = "homeassistant/home-assistant:latest"
+              commonUpdateSettings = {
+                updateStrategy = "digest"
+              }
+            }
+          ]
+        }
       ]
     }
   }

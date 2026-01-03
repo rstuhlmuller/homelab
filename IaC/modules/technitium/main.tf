@@ -27,10 +27,6 @@ resource "kubernetes_persistent_volume_claim" "technitium_config" {
 resource "argocd_application" "technitium" {
   metadata {
     name = "technitium"
-    annotations = {
-      "argocd-image-updater.argoproj.io/image-list"                = "technitium=technitium/dns-server:13.x"
-      "argocd-image-updater.argoproj.io/tailscale.update-strategy" = "semver"
-    }
   }
 
   spec {
@@ -71,6 +67,34 @@ resource "argocd_application" "technitium" {
         prune     = true
         self_heal = true
       }
+    }
+  }
+}
+
+resource "kubernetes_manifest" "technitium_image_updater" {
+  manifest = {
+    apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
+    kind       = "ImageUpdater"
+    metadata = {
+      name      = "technitium-image-updater"
+      namespace = kubernetes_namespace_v1.technitium.metadata[0].name
+    }
+    spec = {
+      namespace = "argocd"
+      applicationRefs = [
+        {
+          namePattern = "technitium"
+          images = [
+            {
+              alias     = "technitium"
+              imageName = "technitium/dns-server:13.x"
+              commonUpdateSettings = {
+                updateStrategy = "semver"
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }
