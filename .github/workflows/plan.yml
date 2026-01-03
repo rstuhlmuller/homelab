@@ -10,17 +10,14 @@ on:
       - 'IaC/**'
       - '.github/workflows/plan.yml'
 
-permissions:
-  contents: read
-  id-token: write
-  pull-requests: write
-
 env:
   working_dir: IaC/production/homelab
 
 jobs:
   checks:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: 'Checkout'
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
@@ -36,6 +33,10 @@ jobs:
     needs: [ checks ]
     concurrency:
       group: terragrunt
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
     steps:
       - name: 'Checkout'
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
