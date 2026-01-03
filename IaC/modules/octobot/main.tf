@@ -7,10 +7,6 @@ resource "kubernetes_namespace_v1" "octobot" {
 resource "argocd_application" "octobot" {
   metadata {
     name = "octobot"
-    annotations = {
-      "argocd-image-updater.argoproj.io/image-list"              = "octobot=drakkarsoftware/octobot:2.x"
-      "argocd-image-updater.argoproj.io/octobot.update-strategy" = "semver"
-    }
   }
 
   spec {
