@@ -38,7 +38,7 @@ resource "argocd_application" "postgresql" {
         }
         parameter {
           name  = "image.repository"
-          value = "bitnami/postgresql"
+          value = "bitnamilegacy/postgresql"
         }
         parameter {
           name  = "global.postgresql.auth.database"
@@ -49,7 +49,27 @@ resource "argocd_application" "postgresql" {
           value = "true"
         }
         parameter {
+          name  = "metrics.image.repository"
+          value = "bitnamilegacy/postgres-exporter"
+        }
+        parameter {
           name  = "metrics.serviceMonitor.enabled"
+          value = "true"
+        }
+        parameter {
+          name  = "volumePermissions.enabled"
+          value = "true"
+        }
+        parameter {
+          name  = "securityContext.fsGroup"
+          value = "1001"
+        }
+        parameter {
+          name  = "securityContext.runAsUser"
+          value = "1001"
+        }
+        parameter {
+          name  = "containerSecurityContext.runAsNonRoot"
           value = "true"
         }
       }
@@ -62,3 +82,38 @@ resource "argocd_application" "postgresql" {
     }
   }
 }
+
+# resource "kubernetes_manifest" "postgresql_image_updater" {
+#   manifest = {
+#     apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
+#     kind       = "ImageUpdater"
+#     metadata = {
+#       name      = "postgresql-image-updater"
+#       namespace = kubernetes_namespace_v1.postgresql.metadata[0].name
+#     }
+#   spec = {
+#     namespace = "argocd"
+#     applicationRefs = [
+#       {
+#         namePattern = "postgresql"
+#         images = [
+#           {
+#             alias     = "postgresql"
+#             imageName = "bitnamisecure/postgresql"
+#             commonUpdateSettings = {
+#               updateStrategy = "newest-build"
+#             }
+#           },
+#           {
+#             alias     = "postgres-exporter"
+#             imageName = "bitnamisecure/postgres-exporter"
+#             commonUpdateSettings = {
+#               updateStrategy = "newest-build"
+#             }
+#           }
+#         ]
+#       }
+#     ]
+#     }
+#   }
+# }
