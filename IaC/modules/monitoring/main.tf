@@ -97,10 +97,6 @@ resource "argocd_application" "grafana" {
 resource "argocd_application" "umami" {
   metadata {
     name = "umami"
-    annotations = {
-      "argocd-image-updater.argoproj.io/image-list"            = "umami=ghcr.io/umami-software/umami:postgresql-v2"
-      "argocd-image-updater.argoproj.io/umami.update-strategy" = "digest"
-    }
   }
 
   spec {
@@ -215,6 +211,34 @@ resource "kubernetes_ingress_v1" "umami_tailscale_funnel" {
     }
     tls {
       hosts = ["umami"]
+    }
+  }
+}
+
+resource "kubernetes_manifest" "umami_image_updater" {
+  manifest = {
+    apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
+    kind       = "ImageUpdater"
+    metadata = {
+      name      = "umami-image-updater"
+      namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
+    }
+    spec = {
+      namespace = "argocd"
+      applicationRefs = [
+        {
+          namePattern = "umami"
+          images = [
+            {
+              alias     = "umami"
+              imageName = "ghcr.io/umami-software/umami:postgresql-v2"
+              commonUpdateSettings = {
+                updateStrategy = "digest"
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }

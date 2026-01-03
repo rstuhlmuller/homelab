@@ -7,10 +7,6 @@ resource "kubernetes_namespace_v1" "minecraft" {
 resource "argocd_application" "minecraft" {
   metadata {
     name = "minecraft"
-    annotations = {
-      "argocd-image-updater.argoproj.io/image-list"                = "minecraft=itzg/minecraft-server:latest"
-      "argocd-image-updater.argoproj.io/minecraft.update-strategy" = "digest"
-    }
   }
 
   spec {
@@ -48,6 +44,34 @@ resource "argocd_application" "minecraft" {
         prune     = true
         self_heal = true
       }
+    }
+  }
+}
+
+resource "kubernetes_manifest" "minecraft_image_updater" {
+  manifest = {
+    apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
+    kind       = "ImageUpdater"
+    metadata = {
+      name      = "minecraft-image-updater"
+      namespace = kubernetes_namespace_v1.minecraft.metadata[0].name
+    }
+    spec = {
+      namespace = "argocd"
+      applicationRefs = [
+        {
+          namePattern = "minecraft"
+          images = [
+            {
+              alias     = "minecraft"
+              imageName = "itzg/minecraft-server:latest"
+              commonUpdateSettings = {
+                updateStrategy = "digest"
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }
