@@ -64,6 +64,6 @@ jobs:
         uses: gruntwork-io/terragrunt-action@95fc057922e3c3d4cc021a81a213f088f333ddef # v3
         with:
           tg_dir: ${{ env.working_dir }}
-          tg_command: 'run --all --non-interactive --summary-per-unit --log-level stdout --log-format bare -- plan'
+          tg_command: 'run --all --non-interactive --summary-per-unit --log-level stderr --log-format bare -- plan'
           tg_comment: 1
           github_token: ${{ secrets.GITHUB_TOKEN }}
