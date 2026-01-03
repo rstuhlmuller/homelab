@@ -7,10 +7,6 @@ resource "kubernetes_namespace_v1" "litellm" {
 resource "argocd_application" "litellm" {
   metadata {
     name = "litellm"
-    annotations = {
-      "argocd-image-updater.argoproj.io/image-list"              = "litellm=ghcr.io/berriai/litellm-database:main-stable"
-      "argocd-image-updater.argoproj.io/litellm.update-strategy" = "digest"
-    }
   }
 
   spec {
@@ -137,6 +133,34 @@ resource "kubernetes_manifest" "litellm_tls" {
       }
       dnsNames = [
         "litellm.stinkyboi.com"
+      ]
+    }
+  }
+}
+
+resource "kubernetes_manifest" "litellm_image_updater" {
+  manifest = {
+    apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
+    kind       = "ImageUpdater"
+    metadata = {
+      name      = "litellm-image-updater"
+      namespace = kubernetes_namespace_v1.litellm.metadata[0].name
+    }
+    spec = {
+      namespace = "argocd"
+      applicationRefs = [
+        {
+          namePattern = "litellm"
+          images = [
+            {
+              alias     = "litellm"
+              imageName = "ghcr.io/berriai/litellm-database:main-stable"
+              commonUpdateSettings = {
+                updateStrategy = "digest"
+              }
+            }
+          ]
+        }
       ]
     }
   }

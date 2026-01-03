@@ -1,6 +1,6 @@
 [github_action_config]
 # Enable/disable automatic tools
-auto_review = "true"
+auto_review = "false"
 auto_describe = "true"
 auto_improve = "true"
 # Configure which PR events trigger the action
