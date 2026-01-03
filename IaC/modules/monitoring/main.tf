@@ -30,6 +30,10 @@ resource "argocd_application" "prometheus" {
           name  = "alertmanager.enabled"
           value = "false"
         }
+        parameter {
+          name  = "grafana.enabled"
+          value = "false"
+        }
       }
     }
 
