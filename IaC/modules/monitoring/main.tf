@@ -30,6 +30,31 @@ resource "argocd_application" "prometheus" {
           name  = "alertmanager.enabled"
           value = "false"
         }
+        values = yamlencode({
+          grafana = {
+            enabled = true
+            ingress = {
+              enabled = true
+              hosts = [
+                "grafana.stinkyboi.com"
+              ]
+              tls = [{
+                secretName = kubernetes_manifest.monitoring_certificate.manifest["spec"]["secretName"]
+                hosts      = ["grafana.stinkyboi.com"]
+              }]
+            }
+            persistence = {
+              enabled = true
+            }
+            initChownData = {
+              enabled = false
+            }
+            env = {
+              GF_SERVER_ROOT_URL = "https://grafana.stinkyboi.com/"
+              GF_DATABASE_WAL    = true
+            }
+          }
+        })
       }
     }
 
@@ -39,57 +64,6 @@ resource "argocd_application" "prometheus" {
         self_heal = true
       }
       sync_options = ["ServerSideApply=true"]
-    }
-  }
-}
-
-resource "argocd_application" "grafana" {
-  metadata {
-    name = "grafana"
-  }
-
-  spec {
-    project = "default"
-    destination {
-      server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
-    }
-
-    source {
-      repo_url        = "https://grafana.github.io/helm-charts"
-      chart           = "grafana"
-      target_revision = "10.4.2"
-      helm {
-        value_files = ["values.yaml"]
-        values = yamlencode({
-          ingress = {
-            enabled = true
-            hosts = [
-              "grafana.stinkyboi.com"
-            ]
-            tls = [{
-              secretName = kubernetes_manifest.monitoring_certificate.manifest["spec"]["secretName"]
-              hosts      = ["grafana.stinkyboi.com"]
-            }]
-          }
-          persistence = {
-            enabled = true
-          }
-          initChownData = {
-            enabled = false
-          }
-          env = {
-            GF_SERVER_ROOT_URL = "https://grafana.stinkyboi.com/"
-            GF_DATABASE_WAL    = true
-          }
-        })
-      }
-    }
-    sync_policy {
-      automated {
-        prune     = true
-        self_heal = true
-      }
     }
   }
 }
