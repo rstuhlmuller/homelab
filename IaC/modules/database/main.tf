@@ -38,7 +38,11 @@ resource "argocd_application" "postgresql" {
         }
         parameter {
           name  = "image.repository"
-          value = "bitnamilegacy/postgresql"
+          value = "bitnamisecure/postgresql"
+        }
+        parameter {
+          name  = "image.tag"
+          value = "latest"
         }
         parameter {
           name  = "global.postgresql.auth.database"
@@ -50,7 +54,11 @@ resource "argocd_application" "postgresql" {
         }
         parameter {
           name  = "metrics.image.repository"
-          value = "bitnamilegacy/postgres-exporter"
+          value = "bitnamisecure/postgres-exporter"
+        }
+        parameter {
+          name  = "metrics.image.tag"
+          value = "latest"
         }
         parameter {
           name  = "metrics.serviceMonitor.enabled"
