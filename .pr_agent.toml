@@ -1,3 +1,5 @@
+[config]
+model = "qwen3Coder30b"
 [github_action_config]
 # Enable/disable automatic tools
 auto_review = "false"
