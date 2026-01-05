@@ -19,23 +19,19 @@ resource "argocd_application" "homarr" {
     source {
       repo_url        = "https://homarr-labs.github.io/charts/"
       chart           = "homarr"
-      target_revision = "3.13.0"
+      target_revision = "8.8.1"
       helm {
         parameter {
           name  = "image.pullPolicy"
           value = "Always"
         }
         parameter {
-          name  = "mysql.internal"
-          value = "true"
-        }
-        parameter {
           name  = "rbac.enabled"
           value = "true"
         }
         parameter {
-          name  = "database.migrationEnabled"
-          value = "false"
+          name  = "envSecrets.dbEncryption.existingSecret"
+          value = kubernetes_manifest.db_secret.manifest.metadata.name
         }
         values = yamlencode({
           ingress = {
@@ -54,10 +50,6 @@ resource "argocd_application" "homarr" {
           }
           persistence = {
             homarrDatabase = {
-              enabled          = true
-              storageClassName = "nfs-client"
-            }
-            homarrImages = {
               enabled          = true
               storageClassName = "nfs-client"
             }
