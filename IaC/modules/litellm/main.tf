@@ -62,16 +62,30 @@ resource "argocd_application" "litellm" {
             }
             model_list = [
               {
-                model_name = "Nova Pro"
+                model_name = "novaPro"
                 litellm_params = {
                   model           = "bedrock/us.amazon.nova-pro-v1:0"
                   aws_region_name = "us-west-2"
                 }
               },
               {
-                model_name = "Claude Sonnet 4"
+                model_name = "novaPremier"
+                litellm_params = {
+                  model           = "bedrock/us.amazon.nova-premier-v1:0"
+                  aws_region_name = "us-west-2"
+                }
+              },
+              {
+                model_name = "claudeSonnet4"
                 litellm_params = {
                   model           = "bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0"
+                  aws_region_name = "us-west-2"
+                }
+              },
+              {
+                model_name = "claudeSonnet4.5"
+                litellm_params = {
+                  model           = "bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0"
                   aws_region_name = "us-west-2"
                 }
               },
@@ -79,6 +93,13 @@ resource "argocd_application" "litellm" {
                 model_name = "DeepSeek-R1"
                 litellm_params = {
                   model           = "bedrock/us.deepseek.r1-v1:0"
+                  aws_region_name = "us-west-2"
+                }
+              },
+              {
+                model_name = "qwen3Coder30b"
+                litellm_params = {
+                  model           = "bedrock/qwen.qwen3-coder-30b-a3b-v1:0"
                   aws_region_name = "us-west-2"
                 }
               },
