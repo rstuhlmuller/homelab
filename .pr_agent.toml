@@ -2,7 +2,7 @@
 model = "qwen3Coder30b"
 [github_action_config]
 # Enable/disable automatic tools
-auto_review = "true"
+auto_review = "false"
 auto_describe = "true"
 auto_improve = "false"
 # Configure which PR events trigger the action
