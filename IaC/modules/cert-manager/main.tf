@@ -19,7 +19,7 @@ resource "argocd_application" "cert_manager" {
     source {
       repo_url        = "https://charts.jetstack.io"
       chart           = "cert-manager"
-      target_revision = "v1.17.2"
+      target_revision = "v1.19.2"
 
       helm {
         parameter {
@@ -30,6 +30,10 @@ resource "argocd_application" "cert_manager" {
         values = yamlencode({
           prometheus = {
             enabled = true
+            servicemonitor = {
+              enabled            = true
+              prometheusInstance = "prometheus"
+            }
           }
           crds = {
             enabled = true
