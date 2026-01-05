@@ -64,7 +64,7 @@ resource "kubernetes_manifest" "minecraft_image_updater" {
           images = [
             {
               alias     = "minecraft"
-              imageName = "itzg/minecraft-server:latest"
+              imageName = "itzg/minecraft-server:stable"
               commonUpdateSettings = {
                 updateStrategy = "digest"
               }
