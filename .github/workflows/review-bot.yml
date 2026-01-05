@@ -13,3 +13,5 @@ jobs:
       contents: read
     uses: stuhlmuller/workflows/.github/workflows/review-bot.yml@main
     secrets: inherit
+    with:
+      model: "qwen3Coder30b"
