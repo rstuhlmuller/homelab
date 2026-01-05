@@ -1,5 +1,5 @@
 [config]
-model = "qwen3Coder30b"
+model = "qwen.qwen3-coder-30b-a3b-v1:0"
 [github_action_config]
 # Enable/disable automatic tools
 auto_review = "false"
