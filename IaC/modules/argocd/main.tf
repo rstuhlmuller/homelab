@@ -18,7 +18,7 @@ resource "helm_release" "release" {
   values = [yamlencode({
     global = {
       domain                   = "argocd.stinkyboi.com"
-      addPrometheusAnnotations = "true"
+      addPrometheusAnnotations = "false"
       env = [
         {
           name = "dex.azure.clientSecret"
@@ -37,21 +37,71 @@ resource "helm_release" "release" {
     applicationSet = {
       metrics = {
         enabled = true
+        serviceMonitor = {
+          enabled = true
+          selector = {
+            release = "prometheus"
+          }
+          additionalLabels = {
+            release = "prometheus"
+          }
+        }
       }
     }
     controller = {
       metrics = {
         enabled = true
+        serviceMonitor = {
+          enabled = true
+          selector = {
+            release = "prometheus"
+          }
+          additionalLabels = {
+            release = "prometheus"
+          }
+        }
       }
     }
     repoServer = {
       metrics = {
         enabled = true
+        serviceMonitor = {
+          enabled = true
+          selector = {
+            release = "prometheus"
+          }
+          additionalLabels = {
+            release = "prometheus"
+          }
+        }
+      }
+    }
+    notifications = {
+      metrics = {
+        enabled = true
+        serviceMonitor = {
+          enabled = true
+          selector = {
+            release = "prometheus"
+          }
+          additionalLabels = {
+            release = "prometheus"
+          }
+        }
       }
     }
     server = {
       metrics = {
         enabled = true
+        serviceMonitor = {
+          enabled = true
+          selector = {
+            release = "prometheus"
+          }
+          additionalLabels = {
+            release = "prometheus"
+          }
+        }
       }
       certificate = {
         enabled    = true
