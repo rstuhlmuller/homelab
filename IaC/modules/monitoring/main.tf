@@ -24,12 +24,37 @@ resource "argocd_application" "prometheus" {
     source {
       repo_url        = "https://prometheus-community.github.io/helm-charts"
       chart           = "kube-prometheus-stack"
-      target_revision = "27.13.0"
+      target_revision = "80.10.0"
       helm {
         parameter {
           name  = "alertmanager.enabled"
           value = "false"
         }
+        values = yamlencode({
+          grafana = {
+            enabled = true
+            ingress = {
+              enabled = true
+              hosts = [
+                "grafana.stinkyboi.com"
+              ]
+              tls = [{
+                secretName = kubernetes_manifest.monitoring_certificate.manifest["spec"]["secretName"]
+                hosts      = ["grafana.stinkyboi.com"]
+              }]
+            }
+            persistence = {
+              enabled = true
+            }
+            initChownData = {
+              enabled = false
+            }
+            env = {
+              GF_SERVER_ROOT_URL = "https://grafana.stinkyboi.com/"
+              GF_DATABASE_WAL    = true
+            }
+          }
+        })
       }
     }
 
@@ -43,64 +68,9 @@ resource "argocd_application" "prometheus" {
   }
 }
 
-resource "argocd_application" "grafana" {
-  metadata {
-    name = "grafana"
-  }
-
-  spec {
-    project = "default"
-    destination {
-      server    = "https://kubernetes.default.svc"
-      namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
-    }
-
-    source {
-      repo_url        = "https://grafana.github.io/helm-charts"
-      chart           = "grafana"
-      target_revision = "10.4.2"
-      helm {
-        value_files = ["values.yaml"]
-        values = yamlencode({
-          ingress = {
-            enabled = true
-            hosts = [
-              "grafana.stinkyboi.com"
-            ]
-            tls = [{
-              secretName = kubernetes_manifest.monitoring_certificate.manifest["spec"]["secretName"]
-              hosts      = ["grafana.stinkyboi.com"]
-            }]
-          }
-          persistence = {
-            enabled = true
-          }
-          initChownData = {
-            enabled = false
-          }
-          env = {
-            GF_SERVER_ROOT_URL = "https://grafana.stinkyboi.com/"
-            GF_DATABASE_WAL    = true
-          }
-        })
-      }
-    }
-    sync_policy {
-      automated {
-        prune     = true
-        self_heal = true
-      }
-    }
-  }
-}
-
 resource "argocd_application" "umami" {
   metadata {
     name = "umami"
-    annotations = {
-      "argocd-image-updater.argoproj.io/image-list"            = "umami=ghcr.io/umami-software/umami:postgresql-v2"
-      "argocd-image-updater.argoproj.io/umami.update-strategy" = "digest"
-    }
   }
 
   spec {
@@ -215,6 +185,34 @@ resource "kubernetes_ingress_v1" "umami_tailscale_funnel" {
     }
     tls {
       hosts = ["umami"]
+    }
+  }
+}
+
+resource "kubernetes_manifest" "umami_image_updater" {
+  manifest = {
+    apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
+    kind       = "ImageUpdater"
+    metadata = {
+      name      = "umami-image-updater"
+      namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
+    }
+    spec = {
+      namespace = "argocd"
+      applicationRefs = [
+        {
+          namePattern = "umami"
+          images = [
+            {
+              alias     = "umami"
+              imageName = "ghcr.io/umami-software/umami:postgresql-v2"
+              commonUpdateSettings = {
+                updateStrategy = "digest"
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }

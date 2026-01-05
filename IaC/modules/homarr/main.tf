@@ -7,10 +7,6 @@ resource "kubernetes_namespace_v1" "homarr" {
 resource "argocd_application" "homarr" {
   metadata {
     name = "homarr"
-    annotations = {
-      "argocd-image-updater.argoproj.io/image-list"             = "homarr=ghcr.io/homarr-labs/homarr:latest"
-      "argocd-image-updater.argoproj.io/homarr.update-strategy" = "digest"
-    }
   }
 
   spec {
@@ -94,6 +90,34 @@ resource "kubernetes_manifest" "homarr_certificate" {
       }
       dnsNames = [
         "homarr.stinkyboi.com"
+      ]
+    }
+  }
+}
+
+resource "kubernetes_manifest" "homarr_image_updater" {
+  manifest = {
+    apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
+    kind       = "ImageUpdater"
+    metadata = {
+      name      = "homarr-image-updater"
+      namespace = kubernetes_namespace_v1.homarr.metadata[0].name
+    }
+    spec = {
+      namespace = "argocd"
+      applicationRefs = [
+        {
+          namePattern = "homarr"
+          images = [
+            {
+              alias     = "homarr"
+              imageName = "ghcr.io/homarr-labs/homarr:latest"
+              commonUpdateSettings = {
+                updateStrategy = "digest"
+              }
+            }
+          ]
+        }
       ]
     }
   }

@@ -7,10 +7,6 @@ resource "kubernetes_namespace_v1" "n8n" {
 resource "argocd_application" "n8n" {
   metadata {
     name = "n8n"
-    annotations = {
-      "argocd-image-updater.argoproj.io/image-list"          = "n8n=n8nio/n8n:1.122.x"
-      "argocd-image-updater.argoproj.io/n8n.update-strategy" = "semver"
-    }
   }
 
   spec {
@@ -133,6 +129,34 @@ resource "kubernetes_ingress_v1" "n8n_tailscale_funnel" {
     }
     tls {
       hosts = ["n8n"]
+    }
+  }
+}
+
+resource "kubernetes_manifest" "n8n_image_updater" {
+  manifest = {
+    apiVersion = "argocd-image-updater.argoproj.io/v1alpha1"
+    kind       = "ImageUpdater"
+    metadata = {
+      name      = "n8n-image-updater"
+      namespace = kubernetes_namespace_v1.n8n.metadata[0].name
+    }
+    spec = {
+      namespace = "argocd"
+      applicationRefs = [
+        {
+          namePattern = "n8n"
+          images = [
+            {
+              alias     = "n8n"
+              imageName = "n8nio/n8n:1.122.x"
+              commonUpdateSettings = {
+                updateStrategy = "semver"
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }
