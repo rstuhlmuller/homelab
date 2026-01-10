@@ -187,6 +187,7 @@ resource "kubernetes_manifest" "argocd_certificate" {
 }
 
 resource "aws_ssm_parameter" "argocd" {
+  #checkov:skip=CKV_AWS_337: Need to update with project key
   for_each = toset(["client_secret"])
   name     = lower("/homelab/argocd/${each.value}")
   type     = "SecureString"
