@@ -27,7 +27,6 @@ repos:
       # - id: checkov
       # - id: checkov_container
       - id: checkov_diff
-        args: [--framework, 'terraform', --skip-check, 'CKV_AWS_337', '-f']
       # - id: checkov_diff_container
       - id: checkov_secrets
       # - id: checkov_secrets_container
