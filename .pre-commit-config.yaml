@@ -24,10 +24,10 @@ repos:
   - repo: https://github.com/bridgecrewio/checkov.git
     rev: '3.2.495' # change to tag or sha
     hooks:
-      - id: checkov
-        args: [--framework, 'terraform', --skip-check, 'CKV_AWS_337', '-f']
+      # - id: checkov
       # - id: checkov_container
-      # - id: checkov_diff
+      - id: checkov_diff
+        args: [--framework, 'terraform', --skip-check, 'CKV_AWS_337', '-f']
       # - id: checkov_diff_container
       - id: checkov_secrets
       # - id: checkov_secrets_container
