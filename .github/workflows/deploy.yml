@@ -12,6 +12,8 @@ on:
 env:
   working_dir: IaC/production/homelab
 
+permissions: {}
+
 jobs:
   checks:
     runs-on: ubuntu-latest
